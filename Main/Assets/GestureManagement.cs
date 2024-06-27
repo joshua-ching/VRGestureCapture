@@ -38,7 +38,9 @@ public class GestureManagement : MonoBehaviour
 
     Vector3 cubeinitialsize;
 
-    Vector3 handinitialpos;
+    Vector3 handInitialPos;
+
+    Quaternion handInitionRotation;
 
     public GameObject worldsObject;
 
@@ -73,7 +75,7 @@ public class GestureManagement : MonoBehaviour
         if(collider.gameObject.name == "ear"){
             debug2.text = "ear touch";
             isControllingVolume = true;
-            handinitialpos = inp.posR;
+            handInitialPos = inp.posR;
             // volumeBar.SetActive(true);
         }else{debug2.text= "no ear touch";}
     }
@@ -90,7 +92,7 @@ public class GestureManagement : MonoBehaviour
     public void VolumeControlChange(Collider collider){
         // if(collider.gameObject.name == "volumebar"){
         if(isControllingVolume){
-            debug2.text = (4*(inp.posR.y- handinitialpos.y)).ToString();
+            debug2.text = (4*(inp.posR.y- handInitialPos.y)).ToString();
         }
         // }
     }
@@ -157,18 +159,42 @@ public class GestureManagement : MonoBehaviour
 
     
     bool worldMoving;
+
+    Vector3 worldInitialRotation;
     void WorldCheck(){
         if(inp.grabR){
 
             if(!worldMoving){
-                handinitialpos = inp.posR;
+                handInitialPos = inp.posR;
+                handInitionRotation=inp.rotR;
+
+                worldInitialRotation = worldsObject.transform.eulerAngles;
             }
             worldMoving = true;
 
             // worldsObject
 
+            // float dif;
+
             if(worldMoving){
-                worldsObject.transform.Rotate(0,  3*(handinitialpos.x -  inp.posR.x), 0);
+                
+                // Debug.Log(handInitionRotation.eulerAngles.y + "    " + inp.rotR.eulerAngles.y +"    " + (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y));
+                // dif = (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y);
+
+                
+                    
+                
+                // return closest angle between the two
+                Debug.Log("dif is" + Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y));
+
+
+
+                worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y));
+                worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
+
+
+                // worldsObject.transform.localEulerAngles = new Vector3 (worldsObject.transform.eulerAngles.x, worldInitialRotation.y+ (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y), worldsObject.transform.eulerAngles.z);
+                // worldsObject.transform.Rotate(0,  3*(handinitialpos.x -  inp.posR.x), 0);
             }
 
 
@@ -303,11 +329,11 @@ public class GestureManagement : MonoBehaviour
         if(!inp.grabL && inp.grabR){
             if(!isGrabbing){
                 cubepos= cube.transform.position;
-                handinitialpos = inp.posR;
+                handInitialPos = inp.posR;
                 isGrabbing=true;
             }
             
-            cube.transform.position = cubepos + 3*(inp.posR - handinitialpos);
+            cube.transform.position = cubepos + 3*(inp.posR - handInitialPos);
         }else{
             isGrabbing = false;
         }

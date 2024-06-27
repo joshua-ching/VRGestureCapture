@@ -34,7 +34,6 @@ public class InputData : MonoBehaviour
 
     public Vector2 stickL;
 
-    public Vector2 stickR;
 
 
     
@@ -47,6 +46,10 @@ public class InputData : MonoBehaviour
     public bool gripR;
 
     public bool grabR;
+
+    public Vector2 stickR;
+
+    public Quaternion rotR;
 
 
     public TextMeshProUGUI log;
@@ -130,6 +133,12 @@ public class InputData : MonoBehaviour
         {
             stickR = stickPositionRight;
         }
+
+        if (_rightController.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotationRight))
+        {
+            rotR = rotationRight;
+        }
+
 
         
 
