@@ -92,14 +92,14 @@ public class GestureManagement : MonoBehaviour
     }
 
 
-    float TIME_FOR_QUICK_ACTION = 0.5f;
+    static float TIME_FOR_QUICK_ACTION = 0.5f;
 
     bool MenuCheck(){
 
         //check hand movement over .5 seconds
         //find how many slices is .5 seconds
         // this isn't working properly
-        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/th.sampleRate);
+        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
 
         //perameters for semi straight line. Tweek it for better feeling
         float reqYdist = .3f;
@@ -144,8 +144,7 @@ public class GestureManagement : MonoBehaviour
 
 
             // success logic
-            Debug.Log("succcccc" + Time.time);
-                // do the menu open thing
+            // do the menu open thing
             cube.transform.position += new Vector3(.1f,0,0);
             return true;
         }
@@ -157,37 +156,23 @@ public class GestureManagement : MonoBehaviour
 
     Vector3 worldInitialRotation;
 
+    int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
+
     //I'm using hand rotation to change the spin of the worlds object
     bool WorldCheck(){
         //if only grabing right controller
         if(inp.grabR && !(inp.grabR && inp.grabL)){
             //if first time starting up
             if(!worldMoving){
-                // handInitialPos = inp.posR;
                 handInitionRotation=inp.rotR;
                 worldInitialRotation = worldsObject.transform.eulerAngles;
             }
+
             worldMoving = true;
 
-            // worldsObject
-
-            // float dif;
-
-            if(worldMoving){
-                
-                // Debug.Log(handInitionRotation.eulerAngles.y + "    " + inp.rotR.eulerAngles.y +"    " + (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y));
-                // dif = (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y);
-
-                
-                    
-                
-                // return closest angle between the two
-                Debug.Log("dif is" + Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y));
-
-                int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/th.sampleRate);
-
-                    //////
-                    ///
+            // return closest angle between the two
+            // Debug.Log("dif is" + Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y));
+            
             int lastIndex = th.rotListR.Count - samplesToCheck;
             int currentIdx = th.rotListR.Count - 1;
 
@@ -200,53 +185,37 @@ public class GestureManagement : MonoBehaviour
                 // Debugging information
                 Debug.Log("Last Rotation: " + lastRotation.eulerAngles.y);
                 Debug.Log("Current Rotation: " + currentRotation.eulerAngles.y);
+
+                
                 Debug.Log("Angle Difference: " + angleDifference);
 
-                if (angleDifference < 5) {
-                    // Your logic if the angle difference is less than 5 degrees
-                }
-            } else {
+                Debug.Log("samples to check: " + samplesToCheck + "qa" + TIME_FOR_QUICK_ACTION + "  " + TrackingHistory.sampleRate);
+
+
+
+            } 
+            else {
                 // Handle cases where there aren't enough samples in rotListR
                 Debug.LogWarning("Not enough samples in rotListR to perform comparison.");
             }
 
-
-
-                    /////
-                    ///
-
-
-
-                    Debug.Log(th.rotListR.Count);
-                    Debug.Log(samplesToCheck + "cccc");
-                //if the total angle between the first and last sample is smaller than given angle, stop spinning
-
-
-                if(Mathf.Abs(Mathf.DeltaAngle(th.rotListR[th.rotListR.Count - samplesToCheck].eulerAngles.y, th.rotListR[th.rotListR.Count-1].eulerAngles.y)) < 10){
-                    return false;
-                }
-
-              
-
-                
-                worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * (-Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y)*.9f));
-                worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
-
-                return true;
-
-
-                // worldsObject.transform.localEulerAngles = new Vector3 (worldsObject.transform.eulerAngles.x, worldInitialRotation.y+ (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y), worldsObject.transform.eulerAngles.z);
-                // worldsObject.transform.Rotate(0,  3*(handinitialpos.x -  inp.posR.x), 0);
+            //if the total angle between the first and last sample is smaller than given angle, stop spinning
+            if(Mathf.Abs(Mathf.DeltaAngle(th.rotListR[th.rotListR.Count - samplesToCheck].eulerAngles.y, th.rotListR[th.rotListR.Count-1].eulerAngles.y)) < 10){
+                return false;
             }
 
+            //apply rotation force based off of how different the initial and the current rotation are.
+            worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * (-Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y)*.9f));
+            //remove default spin speed limit by unity
+            worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
 
-            // worldsObject.transform.Rotate(0, 5 * Time.deltaTime, 0);
-            //rotate world based off of hand movement from side to side from when start gripping
-            // worldsObject.transform.Rotate(0, 5, 0);
+            return true;
+
         }else{
+            //if grip gesture is not correct, turn of worldMoving
             worldMoving = false;
-            
-        }return false;
+            return false;
+        }
     }
 
 
@@ -260,7 +229,7 @@ public class GestureManagement : MonoBehaviour
 
 
 
-    
+
 
     public WorldHolder wh;
 
@@ -275,7 +244,7 @@ public class GestureManagement : MonoBehaviour
         for (int i = 1; i < wh.worldList.Length; i++)
         {
             if(closestWorld == null){
-                Debug.Log("worldran");
+                // Debug.Log("worldran");
                 closestWorld = wh.worldList[i];
             }else{
                 //if i world is closer than previously closest world
@@ -397,7 +366,7 @@ public class GestureManagement : MonoBehaviour
 
             if(Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position-mainCamera.transform.position, out RaycastHit hitInfo,50f)){
 
-            Debug.Log("hit" + hitInfo.transform.gameObject.name);
+            // Debug.Log("hit" + hitInfo.transform.gameObject.name);
             try{
                             hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
             }catch{}

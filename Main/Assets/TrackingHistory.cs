@@ -18,7 +18,7 @@ public class TrackingHistory : MonoBehaviour
 
     public int MAX_SAMPLE_SIZE;
 
-    public float sampleRate = .5f;
+    public static float sampleRate = .5f;
 
     float waitUntil;
 
