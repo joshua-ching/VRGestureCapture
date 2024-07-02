@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class TrackingHistory : MonoBehaviour
@@ -7,11 +8,13 @@ public class TrackingHistory : MonoBehaviour
 
     public InputData inp;
 
-    public List<Vector3> positionListR = new List<Vector3>();
+    public List<Vector3> posListR = new List<Vector3>();
 
     public List<bool> gripListR = new List<bool>();
 
     public List<bool> grabListR = new List<bool>();
+
+    public List<Quaternion> rotListR = new List<Quaternion>();
 
     public int MAX_SAMPLE_SIZE;
 
@@ -41,16 +44,18 @@ public class TrackingHistory : MonoBehaviour
     {
 
         if(Time.time > waitUntil){
-            positionListR.Add(inp.posR);
+            posListR.Add(inp.posR);
             gripListR.Add(inp.gripR);
             grabListR.Add(inp.grabR);
+            rotListR.Add(inp.rotR);
 
             waitUntil += sampleRate;
 
-            if(positionListR.Count > MAX_SAMPLE_SIZE){
-                positionListR.RemoveAt(0);
+            if(posListR.Count > MAX_SAMPLE_SIZE){
+                posListR.RemoveAt(0);
                 gripListR.RemoveAt(0);
                 grabListR.RemoveAt(0);
+                rotListR.RemoveAt(0);
             }
         }
     }

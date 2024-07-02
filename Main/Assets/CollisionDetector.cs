@@ -28,12 +28,12 @@ public class CollisionDetector : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        Debug.Log("collided with" + other);
+        // Debug.Log("collided with" + other);
         touch.Invoke(other);
     }
 
     private void OnTriggerExit(Collider other){
-        Debug.Log("exited " + other);
+        // Debug.Log("exited " + other);
         exit.Invoke(other);
     }
 
