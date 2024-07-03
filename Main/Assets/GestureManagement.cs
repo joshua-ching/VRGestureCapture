@@ -23,6 +23,8 @@ public class GestureManagement : MonoBehaviour
 
     public InputData inp;
 
+    public ObjectManipulation objManip;
+
     public Vector3 distanceBetweenHands;
 
     public TextMeshProUGUI debug;
@@ -92,7 +94,11 @@ public class GestureManagement : MonoBehaviour
     }
 
 
+<<<<<<< Updated upstream
     float TIME_FOR_QUICK_ACTION = 0.5f;
+=======
+    public static float TIME_FOR_QUICK_ACTION = 0.5f;
+>>>>>>> Stashed changes
 
     bool MenuCheck(){
 
@@ -152,6 +158,7 @@ public class GestureManagement : MonoBehaviour
         return false;
     }
 
+<<<<<<< Updated upstream
     // world moving stuff
     bool worldMoving;
 
@@ -248,6 +255,62 @@ public class GestureManagement : MonoBehaviour
             
         }return false;
     }
+=======
+
+
+
+    // // world moving stuff
+    // bool worldMoving;
+
+    // Vector3 worldInitialRotation;
+
+    // int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
+
+    // //I'm using hand rotation to change the spin of the worlds object
+    // bool WorldCheck(){
+    //     //if only grabing right controller
+    //     if(inp.grabR && !(inp.grabR && inp.grabL)){
+    //         //if first time starting up
+    //         if(!worldMoving){
+    //             handInitionRotation=inp.rotR;
+    //             worldInitialRotation = worldsObject.transform.eulerAngles;
+    //         }
+
+    //         worldMoving = true;
+    //         //calculate which from which to which index should be checked based off of samplesToCheck
+    //         int lastIndex = th.rotListR.Count - samplesToCheck; 
+    //         int currentIdx = th.rotListR.Count - 1;
+
+    //         if (lastIndex >= 0 && currentIdx >= 0) {
+    //             //get rotation angles from most recent and last rotation angle
+    //             Quaternion lastRotation = th.rotListR[lastIndex];
+    //             Quaternion currentRotation = th.rotListR[currentIdx];
+
+    //             float angleDifference = Mathf.Abs(Mathf.DeltaAngle(lastRotation.eulerAngles.y, currentRotation.eulerAngles.y));
+    //         } 
+    //         else {
+    //             // Handle cases where there aren't enough samples in rotListR
+    //             Debug.LogWarning("Not enough samples in rotListR to perform comparison.");
+    //         }
+    //         //if the total angle between the first and last sample is smaller than given angle, stop spinning
+    //         if(Mathf.Abs(Mathf.DeltaAngle(th.rotListR[th.rotListR.Count - samplesToCheck].eulerAngles.y, th.rotListR[th.rotListR.Count-1].eulerAngles.y)) < 10){
+    //             return false;
+    //         }
+
+    //         //apply rotation force based off of how different the initial and the current rotation are.
+    //         worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * (-Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y)*.9f));
+    //         //remove default spin speed limit by unity
+    //         worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
+
+    //         return true;
+
+    //     }else{
+    //         //if grip gesture is not correct, turn of worldMoving
+    //         worldMoving = false;
+    //         return false;
+    //     }
+    // }
+>>>>>>> Stashed changes
 
 
 
@@ -292,53 +355,53 @@ public class GestureManagement : MonoBehaviour
     }
 
     
-    void Rescale(){
+    // void Rescale(){
 
-        if(!isRescaling){
-            initialDistenceBetweenHands = distanceBetweenHands;
-            worldInitialSize = closestWorld.localScale;
+    //     if(!isRescaling){
+    //         initialDistenceBetweenHands = distanceBetweenHands;
+    //         worldInitialSize = closestWorld.localScale;
             
-            isRescaling = true;
-        }
-        if(closestWorld!=null){
+    //         isRescaling = true;
+    //     }
+    //     if(closestWorld!=null){
 
-            closestWorld.localScale = worldInitialSize * (1+ Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
-            Debug.Log(Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
-        }
+    //         closestWorld.localScale = worldInitialSize * (1+ Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
+    //         Debug.Log(Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
+    //     }
 
-    }
+    // }
 
-    void WorldResize(){
-        //cube stuff------------
+    // void WorldResize(){
+    //     //cube stuff------------
         
-        // direction = directionTransform.position - originTransform.position;
+    //     // direction = directionTransform.position - originTransform.position;
 
-        distanceBetweenHands = 2*(inp.posL - inp.posR);
+    //     distanceBetweenHands = 2*(inp.posL - inp.posR);
 
-        // debug.text = distanceBetweenHands.ToString();
+    //     // debug.text = distanceBetweenHands.ToString();
 
 
-        // if(!inp.grabL){
-        //     isRescaling= false;
-        // }
-        if(inp.grabR && inp.grabL){
-            Rescale();
-        }else{
-            isRescaling = false;
-        }
+    //     // if(!inp.grabL){
+    //     //     isRescaling= false;
+    //     // }
+    //     if(inp.grabR && inp.grabL){
+    //         Rescale();
+    //     }else{
+    //         isRescaling = false;
+    //     }
 
-        // if(!inp.grabL && inp.grabR){
-        //     if(!isGrabbing){
-        //         cubepos= cube.transform.position;
-        //         handInitialPos = inp.posR;
-        //         isGrabbing=true;
-        //     }
+    //     // if(!inp.grabL && inp.grabR){
+    //     //     if(!isGrabbing){
+    //     //         cubepos= cube.transform.position;
+    //     //         handInitialPos = inp.posR;
+    //     //         isGrabbing=true;
+    //     //     }
             
-        //     cube.transform.position = cubepos + 3*(inp.posR - handInitialPos);
-        // }else{
-        //     isGrabbing = false;
-        // }
-    }
+    //     //     cube.transform.position = cubepos + 3*(inp.posR - handInitialPos);
+    //     // }else{
+    //     //     isGrabbing = false;
+    //     // }
+    // }
 
     [SerializeField] private LayerMask layerMask;
 
@@ -354,7 +417,7 @@ public class GestureManagement : MonoBehaviour
 
         if(Time.time > 2){
             MenuCheck();
-            WorldCheck();
+            objManip.RotateObject(worldsObject);
             SelectWorldCheck();
                 
                         // worldsObject.transform.Rotate(0, 5 * Time.deltaTime, 0);
@@ -561,7 +624,7 @@ public class GestureManagement : MonoBehaviour
             isRescaling= false;
         }
         if(inp.grabR && inp.grabL){
-            Rescale();
+            objManip.Rescale(closestWorld.gameObject);
         }
 
         if(!inp.grabL && inp.grabR){

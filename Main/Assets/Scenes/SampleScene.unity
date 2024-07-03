@@ -956,6 +956,7 @@ GameObject:
   - component: {fileID: 318071321}
   - component: {fileID: 318071320}
   - component: {fileID: 318071322}
+  - component: {fileID: 318071323}
   m_Layer: 0
   m_Name: GestureManager
   m_TagString: Untagged
@@ -979,6 +980,7 @@ MonoBehaviour:
   originTransform: {fileID: 2040912998}
   directionTransform: {fileID: 757098406}
   inp: {fileID: 2046290951}
+  objManip: {fileID: 0}
   distanceBetweenHands: {x: 0, y: 0, z: 0}
   debug: {fileID: 1130326200}
   debug2: {fileID: 280427804}
@@ -1028,7 +1030,20 @@ MonoBehaviour:
   grabListR: 
   rotListR: []
   MAX_SAMPLE_SIZE: 15
-  sampleRate: 0.1
+--- !u!114 &318071323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318071319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf7c81a77d91374d81f31bf1a7fb9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inp: {fileID: 2046290951}
+  th: {fileID: 318071322}
 --- !u!1 &318114653
 GameObject:
   m_ObjectHideFlags: 0
@@ -4474,7 +4489,6 @@ GameObject:
   - component: {fileID: 1566371343}
   - component: {fileID: 1566371342}
   - component: {fileID: 1566371341}
-  - component: {fileID: 1566371344}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -4568,33 +4582,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566371339}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &1566371344
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566371339}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1568770769
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,7 +5613,6 @@ GameObject:
   - component: {fileID: 1650190609}
   - component: {fileID: 1650190608}
   - component: {fileID: 1650190610}
-  - component: {fileID: 1650190611}
   m_Layer: 0
   m_Name: Sphere (3)
   m_TagString: Untagged
@@ -5720,33 +5706,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1650190611
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1650190605}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1720196700
 GameObject:
   m_ObjectHideFlags: 0
@@ -8052,6 +8011,7 @@ SceneRoots:
   - {fileID: 668660077}
   - {fileID: 481735712}
   - {fileID: 2046290952}
+  - {fileID: 1606921941}
   - {fileID: 318071321}
   - {fileID: 2081795629}
   - {fileID: 959085788}
@@ -8063,7 +8023,6 @@ SceneRoots:
   - {fileID: 2020296265}
   - {fileID: 948626302}
   - {fileID: 1223448120}
-  - {fileID: 1606921941}
   - {fileID: 1560422742}
   - {fileID: 1021690417}
   - {fileID: 873541551}
