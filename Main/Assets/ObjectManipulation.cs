@@ -10,20 +10,7 @@ public class ObjectManipulation : MonoBehaviour
     public GestureManagement gest;
 
     public TrackingHistory th;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
-
+   
     bool rotating;
 
     Vector3 objectInitialRotation;
@@ -88,17 +75,22 @@ public class ObjectManipulation : MonoBehaviour
         }
     }
 
-    bool isRescaling;
+    public bool isRescaling;
 
-    Vector3 initialDistenceBetweenHands;
+    // Vector3 initialDistenceBetweenHands;
+
+    float initialDistenceBetweenHands;
 
     Vector3 objectInitialSize;
-
+    
+    // float resizeValue;
     
     public bool Rescale(GameObject objectToRescale){
 
         if(!isRescaling){
+            //initialize values
             initialDistenceBetweenHands = gest.distanceBetweenHands;
+
             objectInitialSize = objectToRescale.transform.localScale;
             
             isRescaling = true;
@@ -106,8 +98,19 @@ public class ObjectManipulation : MonoBehaviour
         }
         if(objectToRescale!=null){
 
-            objectToRescale.transform.localScale = objectInitialSize * (1+ Vector3.Distance(initialDistenceBetweenHands, gest.distanceBetweenHands));
-            Debug.Log(Vector3.Distance(initialDistenceBetweenHands, gest.distanceBetweenHands));
+            // objectToRescale.transform.localScale = objectInitialSize * (1+ Vector3.Distance(initialDistenceBetweenHands, gest.distanceBetweenHands));
+            // Debug.Log("dist"+Vector3.Distance(initialDistenceBetweenHands, gest.distanceBetweenHands));
+            // return true;
+
+
+            //this is hacky fix later (bc its multiplication so when too big it increases to fast)
+            // if(objectToRescale.transform.localScale.x > 4){
+            //     resizeValue = 0.8f;
+            // }else if(objectToRescale.transform.localScale.x > 4){
+            //     resizeValue = 1.5f;
+            // }else{resizeValue = 1;}
+            objectToRescale.transform.localScale = objectInitialSize * (1+gest.distanceBetweenHands - initialDistenceBetweenHands);
+            // Debug.Log("dist"+Vector3.Distance(initialDistenceBetweenHands, gest.distanceBetweenHands));
             return true;
         }
         return false;

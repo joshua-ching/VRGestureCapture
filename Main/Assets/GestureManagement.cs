@@ -25,7 +25,7 @@ public class GestureManagement : MonoBehaviour
 
     public ObjectManipulation objManip;
 
-    public Vector3 distanceBetweenHands;
+    public float distanceBetweenHands;
 
     public TextMeshProUGUI debug;
 
@@ -41,7 +41,7 @@ public class GestureManagement : MonoBehaviour
     bool isGrabbing = false;
 
     bool isRescaling = false;
-    Vector3 initialDistenceBetweenHands;
+    // Vector3 initialDistenceBetweenHands;
 
     Vector3 worldInitialSize;
 
@@ -51,17 +51,7 @@ public class GestureManagement : MonoBehaviour
 
     public GameObject worldsObject;
 
-
-    // public GameObject leftHand;
-
-    // public GameObject volumeBar;
-
-    // public GameObject focusHand;
-
     bool isControllingVolume;
-
-
-
 
 
 
@@ -94,18 +84,14 @@ public class GestureManagement : MonoBehaviour
     }
 
 
-<<<<<<< Updated upstream
-    float TIME_FOR_QUICK_ACTION = 0.5f;
-=======
     public static float TIME_FOR_QUICK_ACTION = 0.5f;
->>>>>>> Stashed changes
 
     bool MenuCheck(){
 
         //check hand movement over .5 seconds
         //find how many slices is .5 seconds
         // this isn't working properly
-        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/th.sampleRate);
+        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
 
         //perameters for semi straight line. Tweek it for better feeling
         float reqYdist = .3f;
@@ -158,173 +144,6 @@ public class GestureManagement : MonoBehaviour
         return false;
     }
 
-<<<<<<< Updated upstream
-    // world moving stuff
-    bool worldMoving;
-
-    Vector3 worldInitialRotation;
-
-    //I'm using hand rotation to change the spin of the worlds object
-    bool WorldCheck(){
-        //if only grabing right controller
-        if(inp.grabR && !(inp.grabR && inp.grabL)){
-            //if first time starting up
-            if(!worldMoving){
-                // handInitialPos = inp.posR;
-                handInitionRotation=inp.rotR;
-                worldInitialRotation = worldsObject.transform.eulerAngles;
-            }
-            worldMoving = true;
-
-            // worldsObject
-
-            // float dif;
-
-            if(worldMoving){
-                
-                // Debug.Log(handInitionRotation.eulerAngles.y + "    " + inp.rotR.eulerAngles.y +"    " + (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y));
-                // dif = (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y);
-
-                
-                    
-                
-                // return closest angle between the two
-                Debug.Log("dif is" + Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y));
-
-                int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/th.sampleRate);
-
-                    //////
-                    ///
-            int lastIndex = th.rotListR.Count - samplesToCheck;
-            int currentIdx = th.rotListR.Count - 1;
-
-            if (lastIndex >= 0 && currentIdx >= 0) {
-                Quaternion lastRotation = th.rotListR[lastIndex];
-                Quaternion currentRotation = th.rotListR[currentIdx];
-
-                float angleDifference = Mathf.Abs(Mathf.DeltaAngle(lastRotation.eulerAngles.y, currentRotation.eulerAngles.y));
-
-                // Debugging information
-                Debug.Log("Last Rotation: " + lastRotation.eulerAngles.y);
-                Debug.Log("Current Rotation: " + currentRotation.eulerAngles.y);
-                Debug.Log("Angle Difference: " + angleDifference);
-
-                if (angleDifference < 5) {
-                    // Your logic if the angle difference is less than 5 degrees
-                }
-            } else {
-                // Handle cases where there aren't enough samples in rotListR
-                Debug.LogWarning("Not enough samples in rotListR to perform comparison.");
-            }
-
-
-
-                    /////
-                    ///
-
-
-
-                    Debug.Log(th.rotListR.Count);
-                    Debug.Log(samplesToCheck + "cccc");
-                //if the total angle between the first and last sample is smaller than given angle, stop spinning
-
-
-                if(Mathf.Abs(Mathf.DeltaAngle(th.rotListR[th.rotListR.Count - samplesToCheck].eulerAngles.y, th.rotListR[th.rotListR.Count-1].eulerAngles.y)) < 10){
-                    return false;
-                }
-
-              
-
-                
-                worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * (-Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y)*.9f));
-                worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
-
-                return true;
-
-
-                // worldsObject.transform.localEulerAngles = new Vector3 (worldsObject.transform.eulerAngles.x, worldInitialRotation.y+ (handInitionRotation.eulerAngles.y - inp.rotR.eulerAngles.y), worldsObject.transform.eulerAngles.z);
-                // worldsObject.transform.Rotate(0,  3*(handinitialpos.x -  inp.posR.x), 0);
-            }
-
-
-            // worldsObject.transform.Rotate(0, 5 * Time.deltaTime, 0);
-            //rotate world based off of hand movement from side to side from when start gripping
-            // worldsObject.transform.Rotate(0, 5, 0);
-        }else{
-            worldMoving = false;
-            
-        }return false;
-    }
-=======
-
-
-
-    // // world moving stuff
-    // bool worldMoving;
-
-    // Vector3 worldInitialRotation;
-
-    // int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
-
-    // //I'm using hand rotation to change the spin of the worlds object
-    // bool WorldCheck(){
-    //     //if only grabing right controller
-    //     if(inp.grabR && !(inp.grabR && inp.grabL)){
-    //         //if first time starting up
-    //         if(!worldMoving){
-    //             handInitionRotation=inp.rotR;
-    //             worldInitialRotation = worldsObject.transform.eulerAngles;
-    //         }
-
-    //         worldMoving = true;
-    //         //calculate which from which to which index should be checked based off of samplesToCheck
-    //         int lastIndex = th.rotListR.Count - samplesToCheck; 
-    //         int currentIdx = th.rotListR.Count - 1;
-
-    //         if (lastIndex >= 0 && currentIdx >= 0) {
-    //             //get rotation angles from most recent and last rotation angle
-    //             Quaternion lastRotation = th.rotListR[lastIndex];
-    //             Quaternion currentRotation = th.rotListR[currentIdx];
-
-    //             float angleDifference = Mathf.Abs(Mathf.DeltaAngle(lastRotation.eulerAngles.y, currentRotation.eulerAngles.y));
-    //         } 
-    //         else {
-    //             // Handle cases where there aren't enough samples in rotListR
-    //             Debug.LogWarning("Not enough samples in rotListR to perform comparison.");
-    //         }
-    //         //if the total angle between the first and last sample is smaller than given angle, stop spinning
-    //         if(Mathf.Abs(Mathf.DeltaAngle(th.rotListR[th.rotListR.Count - samplesToCheck].eulerAngles.y, th.rotListR[th.rotListR.Count-1].eulerAngles.y)) < 10){
-    //             return false;
-    //         }
-
-    //         //apply rotation force based off of how different the initial and the current rotation are.
-    //         worldsObject.GetComponent<Rigidbody>().AddTorque(Vector3.up * (-Mathf.DeltaAngle(handInitionRotation.eulerAngles.y, inp.rotR.eulerAngles.y)*.9f));
-    //         //remove default spin speed limit by unity
-    //         worldsObject.GetComponent<Rigidbody>().maxAngularVelocity = float.MaxValue;
-
-    //         return true;
-
-    //     }else{
-    //         //if grip gesture is not correct, turn of worldMoving
-    //         worldMoving = false;
-    //         return false;
-    //     }
-    // }
->>>>>>> Stashed changes
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
     public WorldHolder wh;
 
     public Transform closestWorld= null;
@@ -338,7 +157,7 @@ public class GestureManagement : MonoBehaviour
         for (int i = 1; i < wh.worldList.Length; i++)
         {
             if(closestWorld == null){
-                Debug.Log("worldran");
+
                 closestWorld = wh.worldList[i];
             }else{
                 //if i world is closer than previously closest world
@@ -351,57 +170,10 @@ public class GestureManagement : MonoBehaviour
 
         }
 
-        closestWorld.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+        // defaultMaterial = closestWorld.gameObject.GetComponent<MeshRenderer>().material;
+
+        // closestWorld.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
     }
-
-    
-    // void Rescale(){
-
-    //     if(!isRescaling){
-    //         initialDistenceBetweenHands = distanceBetweenHands;
-    //         worldInitialSize = closestWorld.localScale;
-            
-    //         isRescaling = true;
-    //     }
-    //     if(closestWorld!=null){
-
-    //         closestWorld.localScale = worldInitialSize * (1+ Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
-    //         Debug.Log(Vector3.Distance(initialDistenceBetweenHands, distanceBetweenHands));
-    //     }
-
-    // }
-
-    // void WorldResize(){
-    //     //cube stuff------------
-        
-    //     // direction = directionTransform.position - originTransform.position;
-
-    //     distanceBetweenHands = 2*(inp.posL - inp.posR);
-
-    //     // debug.text = distanceBetweenHands.ToString();
-
-
-    //     // if(!inp.grabL){
-    //     //     isRescaling= false;
-    //     // }
-    //     if(inp.grabR && inp.grabL){
-    //         Rescale();
-    //     }else{
-    //         isRescaling = false;
-    //     }
-
-    //     // if(!inp.grabL && inp.grabR){
-    //     //     if(!isGrabbing){
-    //     //         cubepos= cube.transform.position;
-    //     //         handInitialPos = inp.posR;
-    //     //         isGrabbing=true;
-    //     //     }
-            
-    //     //     cube.transform.position = cubepos + 3*(inp.posR - handInitialPos);
-    //     // }else{
-    //     //     isGrabbing = false;
-    //     // }
-    // }
 
     [SerializeField] private LayerMask layerMask;
 
@@ -412,8 +184,6 @@ public class GestureManagement : MonoBehaviour
     public GameObject rayCastTarget;
     void Update()
     {
-        // debug2.text = th.ListToString(th.positionListR);
-
 
         if(Time.time > 2){
             MenuCheck();
@@ -426,37 +196,6 @@ public class GestureManagement : MonoBehaviour
         
 
 
-        // positionListR.Add(new Vector3(0,0,Time.time));
-        // if(positionListR.Count >10){
-        //     positionListR.RemoveAt(0);
-        // }
-
-        // string mystring = "";
-
-        // for (int i = 0; i < positionListR.Count; i++)
-        // {
-        //     mystring = mystring + positionListR[i].ToString();
-            
-        // }
-        // debug2.text = mystring;
-        //menu gesture
-
-
-
-        // if(inp.gripL){
-        //     Debug.Log("gripingL");
-        // }else if(inp.gripR){
-        //     Debug.Log("gripingR");
-        // }
-            // if(Physics.Raycast(mainCamera.transform.position, rightController.transform.position - mainCamera.transform.position, out RaycastHit hitInfo,30f)){
-
-            // Debug.Log("hit" + hitInfo.transform.gameObject.name);
-            // try{
-            //                 hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-            // }catch{}
-
-
-            // };
 
             if(Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position-mainCamera.transform.position, out RaycastHit hitInfo,50f)){
 
@@ -472,142 +211,6 @@ public class GestureManagement : MonoBehaviour
 
 
 
-            // if(Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hitInfo,50f)){
-
-            // Debug.Log("hit" + hitInfo.transform.gameObject.name);
-            // try{
-            //                 hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-            // }catch{}
-
-
-            // };
-
-            // Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward, Color.blue,50f);
-
-         
-        //  if(Physics.Raycast(inp.posH, inp.posR - inp.posH, out RaycastHit hitInfo, 20f)){
-        //  };
-
-        
-
-        // Debug.Log("head pos" + mainCamera.transform.position + "cube" + cube.transform.position);
-        // Debug.DrawRay(mainCamera.transform.position, rightController.transform.position - mainCamera.transform.position, Color.blue,20f);
-
-         
-         
-        // Vector3 direction = inp.posR - inp.posH;
-
-
-
-
-        // Cast a ray from posH in the direction of posR
-        // Ray ray = new Ray(inp.posH, inp.posR);
-        // RaycastHit hitInfo;
-        // Debug.DrawLine(inp.posH, inp.posR);
-
-
-        // // Check if the ray hits something
-        // if (Physics.Raycast(ray, out hitInfo))
-        // {
-        //     Debug.Log(hitInfo);
-        //     // Check if the hit point is beyond posR
-        //     // if (Vector3.Dot(hitInfo.point - inp.posR, direction) > 0)
-        //     // {
-        //         // Debug.Log("rayc");
-        //         // Get the GameObject that was hit
-
-        //         GameObject hitObject = hitInfo.collider.gameObject;
-
-        //         // Do something with the hitObject (e.g., print its name)
-        //         Debug.Log("Hit object: " + hitObject.transform.name);
-        //     // }
-        // }
-
-
-
-
-         // Calculate direction from point A to point B
-        // Vector3 direction = pointB.position - pointA.position;
-
-        // // Cast a ray from point A in the direction of point B
-        // Ray ray = new Ray(pointA.position, direction);
-        // RaycastHit hitInfo;
-
-        // // Check if the ray hits something
-        // if (Physics.Raycast(ray, out hitInfo))
-        // {
-        //     // Check if the hit point is beyond point B
-        //     if (Vector3.Dot(hitInfo.point - pointB.position, direction) > 0)
-        //     {
-        //         // Get the GameObject that was hit
-        //         GameObject hitObject = hitInfo.collider.gameObject;
-
-        //         // Do something with the hitObject (e.g., print its name)
-        //         Debug.Log("Hit object: " + hitObject.name);
-        //     }
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -615,7 +218,7 @@ public class GestureManagement : MonoBehaviour
         
         direction = directionTransform.position - originTransform.position;
 
-        distanceBetweenHands = 2*(inp.posL - inp.posR);
+        distanceBetweenHands = Vector3.Distance(inp.posL, inp.posR);
 
         // debug.text = distanceBetweenHands.ToString();
 
@@ -623,9 +226,25 @@ public class GestureManagement : MonoBehaviour
         if(!inp.grabL){
             isRescaling= false;
         }
+
+
+
+
+
         if(inp.grabR && inp.grabL){
             objManip.Rescale(closestWorld.gameObject);
+        }else{
+            //must have trigger to turn this to false when the cue is done
+            objManip.isRescaling = false;
         }
+
+
+
+
+
+
+
+
 
         if(!inp.grabL && inp.grabR){
             if(!isGrabbing){
@@ -639,41 +258,7 @@ public class GestureManagement : MonoBehaviour
             isGrabbing = false;
         }
 
-
-
-
-        // if((inp.posL - inp.posH).magnitude < 5){
-        //     debug.text = "close";
-        // }
-
-        // debug.text= inp.stickL.ToString();
-
-
-
-
-        float rotationAmount = inp.stickR.x * 1 * Time.deltaTime;
-
-        // Rotate the player around the Y-axis
-        // player.transform.Rotate(0, rotationAmount, 0);
-
-        // player.rotate += inp.stickR.x;
-
-
-        // debug2.text= (inp.posL - inp.posH).magnitude.ToString();
-
-        // if (Physics.Raycast(originTransform.position, direction, out RaycastHit hit))
-        // {
-        //     Ray hit something, do something with the hit information
-        //     debug.text= hit.collider.name;
-        // }
-
-
-
-        // Debug.DrawRay(originTransform.position, direction * 10, Color.red);
-
-
-
-
+        // float rotationAmount = inp.stickR.x * 1 * Time.deltaTime;
 
     }
 }

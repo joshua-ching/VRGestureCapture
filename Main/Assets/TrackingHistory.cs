@@ -18,11 +18,7 @@ public class TrackingHistory : MonoBehaviour
 
     public int MAX_SAMPLE_SIZE;
 
-<<<<<<< Updated upstream
-    public float sampleRate = .5f;
-=======
     public static float sampleRate = .1f;//world stuff breaks if 0.5 cause tiem for quick actin is .5
->>>>>>> Stashed changes
 
     float waitUntil;
 
