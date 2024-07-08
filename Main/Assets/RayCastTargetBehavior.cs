@@ -61,7 +61,7 @@ public class RayCastTargetBehavior : MonoBehaviour
 
 
         // GetComponent<Transform>().position =  hand.transform.position +  hand.transform.rotation * offset;
-        Debug.Log("control pos " + hand.transform.position + "point pos " + GetComponent<Transform>().position);
+        // Debug.Log("control pos " + hand.transform.position + "point pos " + GetComponent<Transform>().position);
 
         //fun
         // GetComponent<Transform>().RotateAround(hand.transform.position, Vector3.right, inp.rotR.z * 20f);

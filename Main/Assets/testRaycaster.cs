@@ -15,6 +15,8 @@ public class testRaycaster : MonoBehaviour
 
     PositionConstraint pc;
 
+    public InputData inp;
+
     int target = 0;
 
     float distence;
@@ -29,7 +31,10 @@ public class testRaycaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(inp.triggerL){
+            StartCoroutine(Shoot());
+
+        }
     }
 
 
@@ -54,7 +59,7 @@ public class testRaycaster : MonoBehaviour
         
 
         pc.locked = false;
-                yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
         pc.constraintActive = false;
         inBetweenObject.transform.position = ((targetList[target].transform.position - transform.position).normalized *distence) + transform.position;
@@ -71,7 +76,6 @@ public class testRaycaster : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        StartCoroutine(Shoot());
     
     }
 }
