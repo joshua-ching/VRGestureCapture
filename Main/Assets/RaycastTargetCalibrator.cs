@@ -6,7 +6,9 @@ using UnityEngine.Animations;
 public class RaycastTargetCalibrator : MonoBehaviour
 {
 
-    public List<GameObject> targetList = new List<GameObject>();
+    // public List<GameObject> targetList = new List<GameObject>();
+
+    public GameObject target;
 
     public GameObject inBetweenObject;
 
@@ -16,7 +18,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
     public PositionConstraint pc;
 
-    int target;
+    // int target;
 
     float distance;
 
@@ -37,11 +39,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
     {
         firing = true;
 
-        if (target == targetList.Count)
-        {
-            target = 0;
-        }
-        if (Physics.Raycast(transform.position, targetList[target].transform.position - transform.position, out RaycastHit hit))
+        if (Physics.Raycast(transform.position, target.transform.position - transform.position, out RaycastHit hit))
         {
             // Log the name of the object hit
             // Debug.Log("Hit: firing" + hit.collider.name);
@@ -56,7 +54,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
         pc.locked = false;
 
         pc.constraintActive = false;
-        inBetweenObject.transform.position = ((targetList[target].transform.position - transform.position).normalized * distance) + transform.position;
+        inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
 
         // inBetweenObject.transform.position =new Vector3(0,0,0);
         distance = Vector3.Distance(handObject.transform.position, transform.position);
@@ -69,7 +67,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
         // yield return new WaitForSeconds(1);
         pc.constraintActive = true;
         pc.locked = true;
-        target++;
+        
         firing = false;
     }
 }

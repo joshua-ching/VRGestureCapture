@@ -3063,3 +3063,8 @@ Start importing Assets/Stylized Texture Pack/Stylized Texture Pack 2k .png/Groun
  -> (artifact id: '1fc6cb2a6b4b2748fe01ec6a5169f1b4') in 0.018729 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 1
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: The I/O operation has been aborted because of either a thread exit or an application request.
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
