@@ -6,6 +6,9 @@ using UnityEngine.XR;
 
 public class InputData : MonoBehaviour
 {
+
+    // public delegate void TriggerActionL();
+    // public static event TriggerActionL TriggerClick;
     public InputDevice _rightController;
     public InputDevice _leftController;
     public InputDevice _HMD;
@@ -107,6 +110,7 @@ public class InputData : MonoBehaviour
         if (_leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 stickPositionLeft))
         {
             stickL = stickPositionLeft;
+            // stickL= Vector2.zero;
         }
 
         

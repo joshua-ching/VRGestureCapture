@@ -7,6 +7,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
 {
 
     public List<GameObject> targetList = new List<GameObject>();
+
     public GameObject inBetweenObject;
 
     public GameObject handObject;
@@ -19,60 +20,56 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
     float distance;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-                    // StartCoroutine(Fire());
+    int selectionMode;// 0 is lazer, 1 is head hand, and 2 is head hand offset
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if(inp.triggerL && !firing){
+        if (inp.triggerL && !firing)
+        {
+            
             StartCoroutine(Fire());
         }
-       
+
     }
 
     bool firing = false;
-    IEnumerator Fire(){
+    IEnumerator Fire()
+    {
         firing = true;
 
-        if(target == targetList.Count){
+        if (target == targetList.Count)
+        {
             target = 0;
         }
         if (Physics.Raycast(transform.position, targetList[target].transform.position - transform.position, out RaycastHit hit))
-            {
-                // Log the name of the object hit
-                Debug.Log("Hit: firing" + hit.collider.name);
-                // Draw the ray in the Scene view
-                Debug.DrawRay(transform.position, targetList[target].transform.position - transform.position, Color.red, 100f);               
-            }
+        {
+            // Log the name of the object hit
+            // Debug.Log("Hit: firing" + hit.collider.name);
+            // Draw the ray in the Scene view
+            // Debug.DrawRay(transform.position, targetList[target].transform.position - transform.position, Color.red, 100f);               
+        }
 
         yield return new WaitForSeconds(1f);
+        //setting distence of object from head to be based off of distance from hand to head?
         distance = Vector3.Distance(handObject.transform.position,transform.position);
 
-        // pc.enabled = false;
-        // pc.locked = false;
+        pc.locked = false;
 
-        // pc.constraintActive = false;
-        inBetweenObject.transform.position = ((targetList[target].transform.position - transform.position).normalized *distance) + transform.position;
+        pc.constraintActive = false;
+        inBetweenObject.transform.position = ((targetList[target].transform.position - transform.position).normalized * distance) + transform.position;
 
-        // inBetweenObject.transform.position =new Vector3(1,1,1);
-        // pc.translationAtRest = inBetweenObject.transform.position;
-        // pc.translationOffset = 
-        // pc.translationAtRest = inBetweenObject.transform.position;sct.transform.position;
-        yield return new WaitForSeconds(1);
+        // inBetweenObject.transform.position =new Vector3(0,0,0);
+        distance = Vector3.Distance(handObject.transform.position, transform.position);
 
-        // pc.
-        // pc.constraintActive = true;
+        pc.translationAtRest = inBetweenObject.transform.position;
+        //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
+        pc.translationOffset = (inBetweenObject.transform.position - handObject.transform.position);
 
-        // pc.locked = true;
-
+        //somehow jump is based off of hand distence during setting
+        // yield return new WaitForSeconds(1);
+        pc.constraintActive = true;
+        pc.locked = true;
         target++;
-
-
         firing = false;
     }
 }

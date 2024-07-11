@@ -199,9 +199,9 @@ public class GestureManagement : MonoBehaviour
 
             if(Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position-mainCamera.transform.position, out RaycastHit hitInfo,50f)){
 
-            Debug.Log("hit" + hitInfo.transform.gameObject.name);
+            // Debug.Log("hit" + hitInfo.transform.gameObject.name);
             try{
-                            hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                            // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
             }catch{}
 
 
