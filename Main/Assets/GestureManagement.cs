@@ -47,7 +47,7 @@ public class GestureManagement : MonoBehaviour
     public GameObject worldsObject;
 
     bool isControllingVolume;
-    public AudioSource bg;
+    // public AudioSource bg;
 
 
 
@@ -58,7 +58,7 @@ public class GestureManagement : MonoBehaviour
         if (collider.gameObject.name == "ear")
         {
             // debug2.text = "ear touch";
-            initialBgLevel = bg.volume;
+            // initialBgLevel = bg.volume;
             isControllingVolume = true;
             handInitialPos = inp.posR;
             // volumeBar.SetActive(true);
@@ -218,7 +218,7 @@ public class GestureManagement : MonoBehaviour
         }
 
         if(isControllingVolume){
-            bg.volume = initialBgLevel + ((5 * (inp.posR.y - handInitialPos.y)));
+            // bg.volume = initialBgLevel + ((5 * (inp.posR.y - handInitialPos.y)));
             Debug.Log((5 * (inp.posR.y - handInitialPos.y)).ToString());
         }
 

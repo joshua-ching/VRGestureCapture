@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -167,7 +168,20 @@ public class InputData : MonoBehaviour
 
         }else{isDoublePointing=false;}
 
+
+
+        // //events
+
+        // if(triggerL){
+            
+        // }
+
     }
+
+
+
+
+
     private void InitializeInputDevices()
     {
         
@@ -193,5 +207,10 @@ public class InputData : MonoBehaviour
             inputDevice = devices[0];
         }
     }
+
+
+
+
+    
 
 }

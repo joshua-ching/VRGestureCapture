@@ -25,15 +25,18 @@ public class RaycastTargetCalibrator : MonoBehaviour
         if (inp.triggerL && !firing)
         {
             
-            StartCoroutine(Fire());
+            Fire();
         }
 
     }
 
     bool firing = false;
-    public IEnumerator Fire()
+
+    //this no longer needs to be a coroutine?
+    public void Fire()
     {
         firing = true;
+        //==================fire ray to find where sphere should go================
 
         if (Physics.Raycast(transform.position, target.transform.position - transform.position, out RaycastHit hit))
         {
@@ -43,7 +46,10 @@ public class RaycastTargetCalibrator : MonoBehaviour
             // Debug.DrawRay(transform.position, targetList[target].transform.position - transform.position, Color.red, 100f);               
         }
 
-        yield return new WaitForSeconds(1f);
+        // yield return new WaitForSeconds(0.00001f);
+
+        //=================sphere positioning stuff =============================
+
         //setting distence of object from head to be based off of distance from hand to head?
         distance = Vector3.Distance(handObject.transform.position,transform.position);
 
@@ -61,6 +67,8 @@ public class RaycastTargetCalibrator : MonoBehaviour
         // yield return new WaitForSeconds(1);
         pc.constraintActive = true;
         pc.locked = true;
+
+        //=========================================================================
         
         firing = false;
     }
