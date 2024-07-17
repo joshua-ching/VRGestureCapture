@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+            // StartCoroutine(Test());
+
     }
 
     // Update is called once per frame
@@ -90,5 +91,11 @@ public class GameManager : MonoBehaviour
                     // calibrationRound++;
 
         calibrating = false;
+    }
+
+    IEnumerator Test(){
+    yield return new WaitForSeconds(.2f);
+    cal.MoveTargetSphere(new Vector3(0,0,.01f));
+    StartCoroutine(Test());
     }
 }

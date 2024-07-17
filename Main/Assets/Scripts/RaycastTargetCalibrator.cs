@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics;
 using UnityEngine;
 using UnityEngine.Animations;
 
+//attached to hmd component
 public class RaycastTargetCalibrator : MonoBehaviour
 {
 
     public GameObject target;
 
-    public GameObject inBetweenObject;
+    public GameObject inBetweenObject;//sphere
 
     public GameObject handObject;
 
@@ -52,17 +54,15 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
         //setting distence of object from head to be based off of distance from hand to head?
         distance = Vector3.Distance(handObject.transform.position,transform.position);
-
+        //unlock position constraint so values can be manipulated
         pc.locked = false;
-
         pc.constraintActive = false;
+        //get direction of hand to sphere. extend to length of distence
         inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
-
-        distance = Vector3.Distance(handObject.transform.position, transform.position);
 
         pc.translationAtRest = inBetweenObject.transform.position;
         //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
-        pc.translationOffset = (inBetweenObject.transform.position - handObject.transform.position);
+        pc.translationOffset = inBetweenObject.transform.position - handObject.transform.position;
 
         // yield return new WaitForSeconds(1);
         pc.constraintActive = true;
@@ -71,5 +71,34 @@ public class RaycastTargetCalibrator : MonoBehaviour
         //=========================================================================
         
         firing = false;
+    }
+
+    Vector3 inBetweenObjectOriginalPosition;
+
+
+    public void MoveTargetSphere(Vector3 offset){
+
+        //unlock position constraint so values can be manipulated
+        pc.locked = false;
+        pc.constraintActive = false;
+
+
+        // inBetweenObjectOriginalPosition = ;
+
+        inBetweenObject.transform.position = inBetweenObject.transform.position + offset;
+
+        //set new position
+        //get direction of hand to sphere. extend to length of distence
+        // inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
+
+        pc.translationAtRest = inBetweenObject.transform.position;
+        //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
+        pc.translationOffset = inBetweenObject.transform.position - handObject.transform.position;
+
+        // yield return new WaitForSeconds(1);
+        pc.constraintActive = true;
+        pc.locked = true;
+
+
     }
 }

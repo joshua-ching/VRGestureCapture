@@ -9,15 +9,16 @@ public class matreturn : MonoBehaviour
 
     MeshRenderer mr;
 
-    public Material defaultmat;
+     Material defaultmat;
     void Start()
     {
         mr = GetComponent<MeshRenderer>();
+        defaultmat = mr.material;
     }
 
     float waitTime = 0;
 
-    float timeToWait = 1;
+    float timeToWait = 10;
 
     // Update is called once per frame
     void Update()

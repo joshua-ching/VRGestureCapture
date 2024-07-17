@@ -204,7 +204,12 @@ public class GestureManagement : MonoBehaviour
 
     
 
-    
+    IEnumerator RestoreMaterial(MeshRenderer mesh, Material mat){
+
+        mesh.material = selectMaterial;
+        yield return new WaitForSeconds(2);
+        mesh.material = mat;
+    }
     void Update()
     {
 
@@ -223,13 +228,23 @@ public class GestureManagement : MonoBehaviour
         }
 
 
-        // if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 50f))
-        // {
+        if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 50f))
+        {
+            try
+            {
+                            hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                            // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
+            }
+            catch 
+            {
+                
+                
+            }
 
-        // };
+        };
 
-        // Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 50f);
+        Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 50f);
 
 
 
