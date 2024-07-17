@@ -7,17 +7,19 @@ using UnityEngine.Scripting.APIUpdating;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public Rigidbody rb;
+    //dead script
 
-    public InputData inp;
+    // public Rigidbody rb;
 
-    Vector3 moveDirection;
+    // public InputData inp;
 
-    public float moveSpeed;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    // Vector3 moveDirection;
+
+    // public float moveSpeed;
+    // void Start()
+    // {
+    //     rb = GetComponent<Rigidbody>();
+    // }
 
     void Update()
     {

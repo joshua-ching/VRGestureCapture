@@ -6,8 +6,6 @@ using UnityEngine.Animations;
 public class RaycastTargetCalibrator : MonoBehaviour
 {
 
-    // public List<GameObject> targetList = new List<GameObject>();
-
     public GameObject target;
 
     public GameObject inBetweenObject;
@@ -18,11 +16,9 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
     public PositionConstraint pc;
 
-    // int target;
-
     float distance;
-
-    int selectionMode;// 0 is lazer, 1 is head hand, and 2 is head hand offset
+    // 0 is lazer, 1 is head hand, and 2 is head hand offset
+    int selectionMode;
 
     void Update()
     {
@@ -35,7 +31,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
     }
 
     bool firing = false;
-    IEnumerator Fire()
+    public IEnumerator Fire()
     {
         firing = true;
 
@@ -56,14 +52,12 @@ public class RaycastTargetCalibrator : MonoBehaviour
         pc.constraintActive = false;
         inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
 
-        // inBetweenObject.transform.position =new Vector3(0,0,0);
         distance = Vector3.Distance(handObject.transform.position, transform.position);
 
         pc.translationAtRest = inBetweenObject.transform.position;
         //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
         pc.translationOffset = (inBetweenObject.transform.position - handObject.transform.position);
 
-        //somehow jump is based off of hand distence during setting
         // yield return new WaitForSeconds(1);
         pc.constraintActive = true;
         pc.locked = true;

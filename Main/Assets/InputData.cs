@@ -64,7 +64,7 @@ public class InputData : MonoBehaviour
 
     void Update()
     {
-        log.text=stickL.ToString();
+        // log.text=stickL.ToString();
 
 
 

@@ -32,17 +32,12 @@ public class GestureManagement : MonoBehaviour
     public TextMeshProUGUI debug2;
 
     public GameObject cube;
-
-    // public Rigidbody player;
-
     Vector3 cubepos;
 
 
     bool isGrabbing = false;
 
     bool isRescaling = false;
-    // Vector3 initialDistenceBetweenHands;
-
     Vector3 worldInitialSize;
 
     Vector3 handInitialPos;
@@ -52,33 +47,43 @@ public class GestureManagement : MonoBehaviour
     public GameObject worldsObject;
 
     bool isControllingVolume;
+    public AudioSource bg;
 
 
 
     //volume gesture
 
-    public void VolumeControlOpen(Collider collider){
-        if(collider.gameObject.name == "ear"){
-            debug2.text = "ear touch";
+    public void VolumeControlOpen(Collider collider)
+    {
+        if (collider.gameObject.name == "ear")
+        {
+            // debug2.text = "ear touch";
+            initialBgLevel = bg.volume;
             isControllingVolume = true;
             handInitialPos = inp.posR;
             // volumeBar.SetActive(true);
-        }else{debug2.text= "no ear touch";}
+        }
+        else {  }
     }
 
-      public void VolumeControlClose(Collider collider){
-        if(collider.gameObject.name == "ear"){
-            debug2.text = "ear touch";
+    public void VolumeControlClose(Collider collider)
+    {
+        if (collider.gameObject.name == "ear")
+        {
+            // debug2.text = "ear touch";
             isControllingVolume = false;
             // volumeBar.SetActive(false);
-        }else{debug2.text= "no ear touch";}
+        }
+        else { }
     }
 
 
-    public void VolumeControlChange(Collider collider){
+    public void VolumeControlChange(Collider collider)
+    {
         // if(collider.gameObject.name == "volumebar"){
-        if(isControllingVolume){
-            debug2.text = (4*(inp.posR.y- handInitialPos.y)).ToString();
+        if (isControllingVolume)
+        {
+            
         }
         // }
     }
@@ -86,12 +91,13 @@ public class GestureManagement : MonoBehaviour
 
     public static float TIME_FOR_QUICK_ACTION = 0.5f;
 
-    bool MenuCheck(){
+    bool MenuCheck()
+    {
 
         //check hand movement over .5 seconds
         //find how many slices is .5 seconds
         // this isn't working properly
-        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION/TrackingHistory.sampleRate);
+        int samplesToCheck = (int)(TIME_FOR_QUICK_ACTION / TrackingHistory.sampleRate);
 
         //perameters for semi straight line. Tweek it for better feeling
         float reqYdist = .3f;
@@ -102,43 +108,47 @@ public class GestureManagement : MonoBehaviour
         float lowX = 0;
         float highX = 0;
 
-        float startingY=0;
+        float startingY = 0;
 
         // Debug.Log("check samples" + samplesToCheck);
         for (int i = th.posListR.Count - samplesToCheck; i < th.posListR.Count; i++)
         {
             //instantiate values
-            if(i == (th.posListR.Count - samplesToCheck)){
+            if (i == (th.posListR.Count - samplesToCheck))
+            {
                 lowY = highY = startingY = th.posListR[i].y;
                 lowX = highX = th.posListR[i].x;
 
             }
             //log highest and lowest values
-            if(th.posListR[i].y > highY){
+            if (th.posListR[i].y > highY)
+            {
                 highY = th.posListR[i].y;
             }
-            if(th.posListR[i].y < lowY){
+            if (th.posListR[i].y < lowY)
+            {
                 lowY = th.posListR[i].y;
             }
-            if(th.posListR[i].y > highX){
+            if (th.posListR[i].y > highX)
+            {
                 highX = th.posListR[i].x;
             }
-            if(th.posListR[i].y > highX){
+            if (th.posListR[i].y > highX)
+            {
                 highX = th.posListR[i].x;
             }
 
-            if(!th.gripListR[i]){
+            if (!th.gripListR[i])
+            {
                 return false;
             }
         }
         // if within perameters and from down to up
-        if((highY - lowY > reqYdist) && (highX-lowX < maxXdist) && (th.posListR[th.posListR.Count-1].y - startingY > 0)){
-
-
+        if ((highY - lowY > reqYdist) && (highX - lowX < maxXdist) && (th.posListR[th.posListR.Count - 1].y - startingY > 0))
+        {
             // success logic
-            Debug.Log("succcccc" + Time.time);
-                // do the menu open thing
-            cube.transform.position += new Vector3(.1f,0,0);
+            // do the menu open thing
+            cube.transform.position += new Vector3(.1f, 0, 0);
             return true;
         }
         return false;
@@ -146,28 +156,34 @@ public class GestureManagement : MonoBehaviour
 
     public WorldHolder wh;
 
-    public Transform closestWorld= null;
+    public Transform closestWorld = null;
 
     public GameObject player;
 
     public Material selectMaterial;
 
     public Material defaultMaterial;
-    void SelectWorldCheck(){
+    void SelectWorldCheck()
+    {
         for (int i = 1; i < wh.worldList.Length; i++)
         {
-            if(closestWorld == null){
+            if (closestWorld == null)
+            {
 
                 closestWorld = wh.worldList[i];
-            }else{
+            }
+            else
+            {
                 //if i world is closer than previously closest world
-                if(Mathf.Abs(Vector3.Distance(wh.worldList[i].position, player.transform.position)) < Mathf.Abs(Vector3.Distance(closestWorld.position, player.transform.position))){
+                if (Mathf.Abs(Vector3.Distance(wh.worldList[i].position, player.transform.position)) < Mathf.Abs(Vector3.Distance(closestWorld.position, player.transform.position)))
+                {
                     closestWorld = wh.worldList[i];
-                }else{
+                }
+                else
+                {
                     wh.worldList[i].gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
                 }
             }
-
         }
 
         // defaultMaterial = closestWorld.gameObject.GetComponent<MeshRenderer>().material;
@@ -182,32 +198,38 @@ public class GestureManagement : MonoBehaviour
     public GameObject rightController;
 
     public GameObject rayCastTarget;
+
+
+    float initialBgLevel;
+
+    
+
+    
     void Update()
     {
 
-        if(Time.time > 2){
+        if (Time.time > 2)
+        {
             MenuCheck();
             objManip.RotateObject(worldsObject);
             SelectWorldCheck();
-                
-                        // worldsObject.transform.Rotate(0, 5 * Time.deltaTime, 0);
+            // worldsObject.transform.Rotate(0, 5 * Time.deltaTime, 0);
 
         }
-        
+
+        if(isControllingVolume){
+            bg.volume = initialBgLevel + ((5 * (inp.posR.y - handInitialPos.y)));
+            Debug.Log((5 * (inp.posR.y - handInitialPos.y)).ToString());
+        }
 
 
-
-            if(Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position-mainCamera.transform.position, out RaycastHit hitInfo,50f)){
-
-            // Debug.Log("hit" + hitInfo.transform.gameObject.name);
-            try{
-                            // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-            }catch{}
+        // if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 50f))
+        // {
 
 
-            };
+        // };
 
-            Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position-mainCamera.transform.position, Color.blue,50f);
+        // Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 50f);
 
 
 
@@ -215,7 +237,7 @@ public class GestureManagement : MonoBehaviour
 
 
         //cube stuff------------
-        
+
         direction = directionTransform.position - originTransform.position;
 
         distanceBetweenHands = Vector3.Distance(inp.posL, inp.posR);
@@ -223,17 +245,21 @@ public class GestureManagement : MonoBehaviour
         // debug.text = distanceBetweenHands.ToString();
 
 
-        if(!inp.grabL){
-            isRescaling= false;
+        if (!inp.grabL)
+        {
+            isRescaling = false;
         }
 
 
 
 
 
-        if(inp.grabR && inp.grabL){
+        if (inp.grabR && inp.grabL)
+        {
             objManip.Rescale(closestWorld.gameObject);
-        }else{
+        }
+        else
+        {
             //must have trigger to turn this to false when the cue is done
             objManip.isRescaling = false;
         }
@@ -246,19 +272,20 @@ public class GestureManagement : MonoBehaviour
 
 
 
-        if(!inp.grabL && inp.grabR){
-            if(!isGrabbing){
-                cubepos= cube.transform.position;
+        if (!inp.grabL && inp.grabR)
+        {
+            if (!isGrabbing)
+            {
+                cubepos = cube.transform.position;
                 handInitialPos = inp.posR;
-                isGrabbing=true;
+                isGrabbing = true;
             }
-            
-            cube.transform.position = cubepos + 3*(inp.posR - handInitialPos);
-        }else{
+
+            cube.transform.position = cubepos + 3 * (inp.posR - handInitialPos);
+        }
+        else
+        {
             isGrabbing = false;
         }
-
-        // float rotationAmount = inp.stickR.x * 1 * Time.deltaTime;
-
     }
 }
