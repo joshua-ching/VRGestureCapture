@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using JetBrains.Annotations;
 using UnityEngine.Experimental.AI;
 using UnityEditor.Timeline;
+using Unity.Mathematics;
 
 
 
@@ -210,6 +211,8 @@ public class GestureManagement : MonoBehaviour
         yield return new WaitForSeconds(2);
         mesh.material = mat;
     }
+
+    public GameObject marker;
     void Update()
     {
 
@@ -233,6 +236,9 @@ public class GestureManagement : MonoBehaviour
             try
             {
                             hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                            Instantiate(marker,hitInfo.point,quaternion.identity);
+
+
                             // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
             }

@@ -9,15 +9,15 @@ public class RayCastTargetBehavior : MonoBehaviour
 
     //This is for the calibrator sphere. bad naming
 
-    public PositionConstraint pc;
+    // public PositionConstraint pc;
 
 
 
 
 
-    void Update(){
+    // void Update(){
         
-    }
+    // }
 
 
 
@@ -95,10 +95,10 @@ public class RayCastTargetBehavior : MonoBehaviour
     // {
 
 
-    //     GetComponent<Transform>().position = hand.transform.position +  new Vector3(.5f,0,.5f);
+    //     // GetComponent<Transform>().position = hand.transform.position +  new Vector3(.5f,0,.5f);
 
     //     //fun
-    //     // GetComponent<Transform>().RotateAround(hand.transform.position, Vector3.right, inp.rotR.z * 20f);
+    //     GetComponent<Transform>().RotateAround(hand.transform.position, Vector3.right, inp.rotR.z * 20f);
 
     //     if(inp.triggerL){
     //         if(!recallibrating){

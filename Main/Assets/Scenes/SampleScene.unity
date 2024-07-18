@@ -218,7 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e43c79912a7743a287526ec4a5fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
 --- !u!135 &11899978
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -621,7 +620,7 @@ GameObject:
   - component: {fileID: 65593393}
   - component: {fileID: 65593392}
   - component: {fileID: 65593391}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1145,7 +1144,7 @@ GameObject:
   - component: {fileID: 189205447}
   - component: {fileID: 189205446}
   - component: {fileID: 189205449}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1713,6 +1712,7 @@ MonoBehaviour:
   mainCamera: {fileID: 2040912997}
   rightController: {fileID: 757098405}
   rayCastTarget: {fileID: 1964925162}
+  marker: {fileID: 6302423646307945575, guid: cc7de75d5e79ce247a37f25cfb10a813, type: 3}
 --- !u!4 &318071321
 Transform:
   m_ObjectHideFlags: 0
@@ -4309,7 +4309,7 @@ GameObject:
   - component: {fileID: 761820114}
   - component: {fileID: 761820113}
   - component: {fileID: 761820116}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5974,7 +5974,7 @@ GameObject:
   - component: {fileID: 1091122642}
   - component: {fileID: 1091122641}
   - component: {fileID: 1091122644}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7538,6 +7538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inp: {fileID: 2046290951}
   childMesh: {fileID: 883605371}
+  parentMesh: {fileID: 1964925165}
   target: {fileID: 2040912998}
 --- !u!1 &1293830243
 GameObject:
@@ -7889,7 +7890,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1496310995}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Testingbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10113,7 +10114,7 @@ GameObject:
   - component: {fileID: 1922814704}
   - component: {fileID: 1922814703}
   - component: {fileID: 1922814706}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10836,7 +10837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e43c79912a7743a287526ec4a5fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
 --- !u!54 &1964925168
 Rigidbody:
   m_ObjectHideFlags: 0

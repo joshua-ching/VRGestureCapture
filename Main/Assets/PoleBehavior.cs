@@ -8,6 +8,9 @@ public class PoleBehavior : MonoBehaviour
     public InputData inp;
 
     public MeshRenderer childMesh;
+
+        public MeshRenderer parentMesh;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +35,13 @@ public class PoleBehavior : MonoBehaviour
         }
 
         if(inp.gripR){
-            childMesh.enabled = true;
+            //childMesh.enabled = true;
+                        parentMesh.enabled = true;
+
         }else{
                         childMesh.enabled = false;
+                                    parentMesh.enabled = false;
+
 
         }
 
