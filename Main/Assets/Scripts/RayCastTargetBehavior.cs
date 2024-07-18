@@ -7,6 +7,8 @@ using UnityEngine.Animations;
 public class RayCastTargetBehavior : MonoBehaviour
 {
 
+    // public InputData
+
     //This is for the calibrator sphere. bad naming
 
     // public PositionConstraint pc;

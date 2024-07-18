@@ -12,6 +12,8 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
     public GameObject inBetweenObject;//sphere
 
+    public GameObject onTopObject;
+
     public GameObject handObject;
 
     public InputData inp;
@@ -26,9 +28,13 @@ public class RaycastTargetCalibrator : MonoBehaviour
     {
         if (inp.triggerL && !firing)
         {
-            
             Fire();
         }
+        MoveTargetSphereOffeset(inp.rotR.y); 
+        Debug.Log(inp.rotR.y);
+        Debug.Log("we");
+
+        // MoveTargetSphere(inp.rotR.eulerAngles);
 
     }
 
@@ -69,6 +75,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
         pc.locked = true;
 
         //=========================================================================
+        originalRotation = inp.rotR;
         
         firing = false;
     }
@@ -76,7 +83,7 @@ public class RaycastTargetCalibrator : MonoBehaviour
     Vector3 inBetweenObjectOriginalPosition;
 
 
-    public void MoveTargetSphere(Vector3 offset){
+    public void MoveTargetSphereAbsolute(Vector3 offset){
 
         //unlock position constraint so values can be manipulated
         pc.locked = false;
@@ -99,6 +106,51 @@ public class RaycastTargetCalibrator : MonoBehaviour
         pc.constraintActive = true;
         pc.locked = true;
 
+
+    }
+
+    Vector3 originalPosition;
+
+    Quaternion originalRotation;
+
+    public void MoveTargetSphereOffeset(float offset){
+
+        //unlock position constraint so values can be manipulated
+        // pc.locked = false;
+        // pc.constraintActive = false;
+
+
+        // inBetweenObjectOriginalPosition = ;
+
+        // inBetweenObject.transform.position = inBetweenObject.transform.position + offset;
+
+        originalPosition = onTopObject.transform.localPosition;
+
+
+        // if(offset < 0){
+            offset=offset*-1;
+        // }
+
+        if(originalRotation.y > 0){
+            offset = offset - originalRotation.y;
+        }else{
+            offset = offset + originalRotation.y;
+        }
+
+        onTopObject.transform.localPosition = 20*new Vector3(0,0,(offset));
+
+       
+        //set new position
+        //get direction of hand to sphere. extend to length of distence
+        // inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
+
+        // pc.translationAtRest = inBetweenObject.transform.position;
+        // //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
+        // pc.translationOffset = inBetweenObject.transform.position - handObject.transform.position;
+
+        // // yield return new WaitForSeconds(1);
+        // pc.constraintActive = true;
+        // pc.locked = true;
 
     }
 }

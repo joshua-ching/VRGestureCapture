@@ -40,7 +40,7 @@ public class PoleBehavior : MonoBehaviour
 
         }else{
                         childMesh.enabled = false;
-                                    parentMesh.enabled = false;
+                                    // parentMesh.enabled = false;
 
 
         }

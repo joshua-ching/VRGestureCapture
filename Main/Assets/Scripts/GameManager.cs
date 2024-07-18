@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Test(){
     yield return new WaitForSeconds(.2f);
-    cal.MoveTargetSphere(new Vector3(0,0,.01f));
+    cal.MoveTargetSphereAbsolute(new Vector3(0,0,.01f));
     StartCoroutine(Test());
     }
 }

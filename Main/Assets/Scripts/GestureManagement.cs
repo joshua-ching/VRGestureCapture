@@ -216,6 +216,19 @@ public class GestureManagement : MonoBehaviour
     void Update()
     {
 
+
+
+
+        //
+        
+
+
+
+
+
+        //
+
+
         if (Time.time > 2)
         {
             MenuCheck();
