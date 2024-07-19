@@ -213,20 +213,11 @@ public class GestureManagement : MonoBehaviour
     }
 
     public GameObject marker;
+
+    public GameObject rightHand;
     void Update()
     {
 
-
-
-
-        //
-        
-
-
-
-
-
-        //
 
 
         if (Time.time > 2)
@@ -244,12 +235,12 @@ public class GestureManagement : MonoBehaviour
         }
 
 
-        if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 50f))
+        if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 100f))
         {
             try
             {
                             hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-                            Instantiate(marker,hitInfo.point,quaternion.identity);
+                            marker.transform.position  = hitInfo.point;
 
 
                             // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
@@ -263,7 +254,30 @@ public class GestureManagement : MonoBehaviour
 
         };
 
-        Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 50f);
+        //uncomment below for lazer select
+
+        //switch raycasting target for hand through head
+
+        //  if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, 50f))
+        // {
+        //     try
+        //     {
+        //                     hitInfo2.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+        //                     marker.transform.position  = hitInfo2.point;
+
+
+        //                     // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
+
+        //     }
+        //     catch 
+        //     {
+                
+                
+        //     }
+
+        // };
+
+        Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 100f);
 
 
 

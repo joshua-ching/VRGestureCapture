@@ -30,8 +30,10 @@ public class RaycastTargetCalibrator : MonoBehaviour
         {
             Fire();
         }
-        MoveTargetSphereOffeset(inp.rotR.y); 
-        Debug.Log(inp.rotR.y);
+        MoveTargetSphereOffeset(inp.rotR.y, 'z'); 
+        MoveTargetSphereOffeset(inp.rotR.x, 'y'); 
+
+        Debug.Log(inp.rotR.z);
         Debug.Log("we");
 
         // MoveTargetSphere(inp.rotR.eulerAngles);
@@ -113,44 +115,48 @@ public class RaycastTargetCalibrator : MonoBehaviour
 
     Quaternion originalRotation;
 
-    public void MoveTargetSphereOffeset(float offset){
+    int movementScale = 20;
 
-        //unlock position constraint so values can be manipulated
-        // pc.locked = false;
-        // pc.constraintActive = false;
-
-
-        // inBetweenObjectOriginalPosition = ;
-
-        // inBetweenObject.transform.position = inBetweenObject.transform.position + offset;
-
+    public void MoveTargetSphereOffeset(float offset, char axis){
         originalPosition = onTopObject.transform.localPosition;
 
 
-        // if(offset < 0){
+        //invert because for some reason its opposite
             offset=offset*-1;
-        // }
+            
 
-        if(originalRotation.y > 0){
-            offset = offset - originalRotation.y;
-        }else{
-            offset = offset + originalRotation.y;
+        
+
+            // if(originalRotation.y > 0){
+            // offset = offset - originalRotation.y;
+            // }else{
+            //     offset = offset + originalRotation.y;
+            // }
+
+
+
+
+        //oto z axis times movement scale to amplify movement speed/sensitivity
+        if(axis == 'z'){
+            // offset=offset*-1;
+
+            // if(originalRotation.y > 0){
+            // offset = offset - originalRotation.y;
+            // }else{
+                offset = offset + originalRotation.y;
+            // }
+
+            onTopObject.transform.localPosition = new Vector3(onTopObject.transform.localPosition.x,onTopObject.transform.localPosition.y,movementScale*offset);
+        }else if(axis == 'y'){
+
+            // if(originalRotation.x > 0){
+            // offset = offset - originalRotation.x;
+            // }else{
+                offset = offset + originalRotation.x;
+            // }
+            
+            onTopObject.transform.localPosition = new Vector3(onTopObject.transform.localPosition.x,movementScale*offset,onTopObject.transform.localPosition.z);
         }
-
-        onTopObject.transform.localPosition = 20*new Vector3(0,0,(offset));
-
-       
-        //set new position
-        //get direction of hand to sphere. extend to length of distence
-        // inBetweenObject.transform.position = ((target.transform.position - transform.position).normalized * distance) + transform.position;
-
-        // pc.translationAtRest = inBetweenObject.transform.position;
-        // //FIXED USE HAND TRANSFORM NOT HEAD TRANSFORM
-        // pc.translationOffset = inBetweenObject.transform.position - handObject.transform.position;
-
-        // // yield return new WaitForSeconds(1);
-        // pc.constraintActive = true;
-        // pc.locked = true;
 
     }
 }
