@@ -215,6 +215,56 @@ public class GestureManagement : MonoBehaviour
     public GameObject marker;
 
     public GameObject rightHand;
+
+    public RecenterOrigin ro;
+
+    public GameObject playerSpawn;
+
+    public GameManager gameManager;
+
+    public void Select(GameObject selectedObject){
+
+        try{
+
+        selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
+        }catch{}
+
+        try{
+            selectedObject.GetComponent<TargetBehavior>().OnSelected();
+        }catch{Debug.Log(selectedObject.name + "nope");}
+
+        //what to do for buttons. yes I'm so sorry for this spaghetti
+
+        switch(selectedObject.name){
+            case "lvl1":
+                playerSpawn.transform.position = new Vector3(5,4,-50);
+                ro.Recenter();
+                
+                StartCoroutine(gameManager.StartSpawning(2));
+            return;
+            case "lvl2":
+                playerSpawn.transform.position = new Vector3(-5,4,-50);
+                ro.Recenter();
+                StartCoroutine(gameManager.StartSpawning(1.5f));
+
+            return;
+            case "lvl3":
+                playerSpawn.transform.position = new Vector3(-15,4,-50);
+                ro.Recenter();
+                                StartCoroutine(gameManager.StartSpawning(2));
+
+            return;
+            case "lvl4":
+                playerSpawn.transform.position = new Vector3(-23,4,-50);
+                ro.Recenter();
+                                StartCoroutine(gameManager.StartSpawning(2));
+
+            return;
+
+        }
+    }
+
+
     void Update()
     {
 
@@ -239,7 +289,8 @@ public class GestureManagement : MonoBehaviour
         {
             try
             {
-                            hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                            // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                            // Select(hitInfo.transform.gameObject);
                             marker.transform.position  = hitInfo.point;
 
 

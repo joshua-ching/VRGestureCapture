@@ -33,8 +33,8 @@ public class RaycastTargetCalibrator : MonoBehaviour
         MoveTargetSphereOffeset(inp.rotR.y, 'z'); 
         MoveTargetSphereOffeset(inp.rotR.x, 'y'); 
 
-        Debug.Log(inp.rotR.z);
-        Debug.Log("we");
+        // Debug.Log(inp.rotR.z);
+        // Debug.Log("we");
 
         // MoveTargetSphere(inp.rotR.eulerAngles);
 
