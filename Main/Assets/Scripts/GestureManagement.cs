@@ -64,7 +64,7 @@ public class GestureManagement : MonoBehaviour
             handInitialPos = inp.posR;
             // volumeBar.SetActive(true);
         }
-        else {  }
+        else { }
     }
 
     public void VolumeControlClose(Collider collider)
@@ -84,7 +84,7 @@ public class GestureManagement : MonoBehaviour
         // if(collider.gameObject.name == "volumebar"){
         if (isControllingVolume)
         {
-            
+
         }
         // }
     }
@@ -203,9 +203,10 @@ public class GestureManagement : MonoBehaviour
 
     float initialBgLevel;
 
-    
 
-    IEnumerator RestoreMaterial(MeshRenderer mesh, Material mat){
+
+    IEnumerator RestoreMaterial(MeshRenderer mesh, Material mat)
+    {
 
         mesh.material = selectMaterial;
         yield return new WaitForSeconds(2);
@@ -222,49 +223,79 @@ public class GestureManagement : MonoBehaviour
 
     public GameManager gameManager;
 
-    public void Select(GameObject selectedObject){
+    public void Select(GameObject selectedObject)
+    {
 
-        try{
+        try
+        {
 
-        selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
-        }catch{}
+            selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
+        }
+        catch { }
 
-        try{
+        // try{
+
+        if (selectedObject.name == "Target(Clone)")
+        {
+
             selectedObject.GetComponent<TargetBehavior>().OnSelected();
-        }catch{Debug.Log(selectedObject.name + "nope");}
+        }
+        // }catch{Debug.Log(selectedObject.name + "nope");}
 
         //what to do for buttons. yes I'm so sorry for this spaghetti
 
-        switch(selectedObject.name){
+        switch (selectedObject.name)
+        {
             case "lvl1":
-                playerSpawn.transform.position = new Vector3(5,4,-50);
+                playerSpawn.transform.position = new Vector3(5, 4, -50);
                 ro.Recenter();
-                
+
                 StartCoroutine(gameManager.StartSpawning(2));
-            return;
+                return;
             case "lvl2":
-                playerSpawn.transform.position = new Vector3(-5,4,-50);
+                playerSpawn.transform.position = new Vector3(-5, 4, -50);
                 ro.Recenter();
                 StartCoroutine(gameManager.StartSpawning(1.5f));
 
-            return;
+                return;
             case "lvl3":
-                playerSpawn.transform.position = new Vector3(-15,4,-50);
+                playerSpawn.transform.position = new Vector3(-15, 4, -50);
                 ro.Recenter();
-                                StartCoroutine(gameManager.StartSpawning(2));
+                StartCoroutine(gameManager.StartSpawning(2));
 
-            return;
+                return;
             case "lvl4":
-                playerSpawn.transform.position = new Vector3(-23,4,-50);
+                playerSpawn.transform.position = new Vector3(-23, 4, -50);
                 ro.Recenter();
-                                StartCoroutine(gameManager.StartSpawning(2));
+                StartCoroutine(gameManager.StartSpawning(2));
 
-            return;
+                return;
 
         }
     }
 
+    public GameObject selectedObject;
 
+    public int rayDistance = 500;
+
+    public GameObject GetConfirmRayObject(){
+
+
+        if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, rayDistance))
+            {
+                try
+                {
+                    
+                    return hitInfo2.transform.gameObject;
+                }
+                catch { }
+
+            };
+
+
+
+            return null;
+    }
     void Update()
     {
 
@@ -279,56 +310,67 @@ public class GestureManagement : MonoBehaviour
 
         }
 
-        if(isControllingVolume){
+        if (isControllingVolume)
+        {
             // bg.volume = initialBgLevel + ((5 * (inp.posR.y - handInitialPos.y)));
             Debug.Log((5 * (inp.posR.y - handInitialPos.y)).ToString());
         }
 
 
-        if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, 100f))
+        // if (gameManager.selectionType == 0)
         {
-            try
+
+            if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, rayDistance))
             {
-                            // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-                            // Select(hitInfo.transform.gameObject);
-                            marker.transform.position  = hitInfo.point;
+                try
+                {
+                    hitInfo2.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                    marker.transform.position = hitInfo2.point;
+                    selectedObject = hitInfo2.transform.gameObject;
+                }
+                catch { }
+
+            };
 
 
-                            // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
-            }
-            catch 
-            {
-                
-                
-            }
 
-        };
 
-        //uncomment below for lazer select
-
-        //switch raycasting target for hand through head
-
-        //  if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, 50f))
+        // }
+        // else if (gameManager.selectionType == 1)
         // {
-        //     try
+
+
+
+        //     if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, rayDistance))
         //     {
-        //                     hitInfo2.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-        //                     marker.transform.position  = hitInfo2.point;
+        //         try
+        //         {
+        //             // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+        //             // Select(hitInfo.transform.gameObject);
+        //             marker.transform.position = hitInfo.point;
+        //             // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
+
+        //         }
+        //         catch
+        //         { }
+
+        //     };
 
 
-        //                     // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
-        //     }
-        //     catch 
-        //     {
-                
-                
-        //     }
+        }
 
-        // };
 
-        Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 100f);
+
+        // uncomment below for lazer select
+
+        // switch raycasting target for hand through head
+
+
+
+
+        // Debug.DrawRay(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, Color.blue, 100f);
 
 
 

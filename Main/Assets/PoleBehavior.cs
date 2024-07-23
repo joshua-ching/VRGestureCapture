@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PoleBehavior : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class PoleBehavior : MonoBehaviour
     public GestureManagement gm;
 
     public List<GameObject> selectedObjects = new List<GameObject>();
+
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -49,14 +53,28 @@ public class PoleBehavior : MonoBehaviour
         }
 
         if(inp.triggerR){
-            for(int i=0;i< selectedObjects.Count; i++){
-                // try{
 
-                gm.Select(selectedObjects[i]);
-                // }catch{
+            if(gameManager.selectionType == 0){
 
 
-                // }
+
+                if(gm.GetConfirmRayObject() == gm.selectedObject){//make sure ray is still pointing at object cause no leave function like pole
+
+                gm.Select(gm.selectedObject);
+                };
+            }
+            else if(gameManager.selectionType == 1){
+
+            
+                for(int i=0;i< selectedObjects.Count; i++){
+                    // try{
+
+                    gm.Select(selectedObjects[i]);
+                    // }catch{
+                    //     Debug.Log("XX tried to select " + selectedObjects[i].name);
+
+                    // }
+                }
             }
             Debug.Log("fired");
 

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 
 
@@ -20,27 +22,82 @@ public class GameManager : MonoBehaviour
 
     public int hits;
 
+    public int presses;
+
     public int misses;
 
+    public int selectionType = 0;//must be changed in inspector or something cause its public
+
+    public TextMeshProUGUI scoreboard;
+
+    public TextMeshProUGUI timeLog;
+
+    // public CSVWriter csvWriter;
+
+    bool triggerDown = false;
+
+    string filename = "";
+
+    public void Test2(){
+        Debug.Log("connection maed");
+    }
 
 
     // int calibrationRound = 0;
     // Start is called before the first frame update
     void Start()
     {
-        // StartCoroutine(Test());
-        // StartCoroutine(StartSpawning(2));
+
+        //csv stuff
+        filename = Application.dataPath + "/test.csv";
+
+
+        TextWriter tw = new StreamWriter(filename, false);
+        tw.WriteLine("Time,Size,Angle");
+        tw.Close();
+
+        // tw = new StreamWriter(filename, true);//true cause want to append not create new file
+        // tw.WriteLine("this is a test");
+        // tw.WriteLine("this is another test test, weee");
+
+        // tw.Close();
 
     }
+
+    public void WriteTimeToCSV(string data){
+        TextWriter tw = new StreamWriter(filename, true);//true cause want to append not create new file
+        tw.WriteLine(data);
+        tw.Close();
+    }
+
+
+
+
+
     bool spawning = false;
 
     // Update is called once per frame
     void Update()
     {
+        misses = presses - hits;
+        scoreboard.text = hits.ToString() + "   " + presses.ToString() + "  " + misses.ToString();
+
+
         if (!calibrating && inp.gripL)
         {
             StartCoroutine(Calibrate());
         }
+
+
+
+        if(inp.triggerR && !triggerDown){
+            triggerDown=true;
+            presses++;
+        }else if(!inp.triggerR){
+            triggerDown = false;
+        }
+
+
     }
 
     Vector3[] calibrationPositionArray =
@@ -59,8 +116,8 @@ public class GameManager : MonoBehaviour
     // new Vector3(18,1,-50)};
 
 
-    float MAX_Z = -60;
-    float MIN_Z = -40;
+    float MAX_Z = -58;
+    float MIN_Z = -38;
 
     float MAX_Y = 4.2f;
     float MIN_Y = 0.3f;
@@ -82,10 +139,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartSpawning(float timeBetweenSpawns)
     {
+        
         if (spawning == false)
         {
             spawning = true;
             yield return new WaitForSeconds(3);
+            presses = 0;
+            hits = 0;
             for (int i = 0; i < 20; i++)
             {
                 Spawn();
