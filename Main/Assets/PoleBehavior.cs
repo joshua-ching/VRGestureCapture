@@ -94,7 +94,7 @@ public class PoleBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider other){
         selectedObjects.Add(other.gameObject);
                     
-            Debug.Log(other.gameObject.name + "added");
+            // Debug.Log(other.gameObject.name + "added");
 
     }
 

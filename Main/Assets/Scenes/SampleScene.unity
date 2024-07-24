@@ -8113,9 +8113,11 @@ MonoBehaviour:
   timeLog: {fileID: 47066180}
   title: {fileID: 308985162}
   timerText: {fileID: 1996542225}
+  level: 1
   xrLine: {fileID: 757098408}
   playerSpawn: {fileID: 1402867936}
   ro: {fileID: 1948910925}
+  player: {fileID: 1948910921}
 --- !u!4 &988185805
 Transform:
   m_ObjectHideFlags: 0

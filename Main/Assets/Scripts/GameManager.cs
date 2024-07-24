@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         tw.Close();
     }
 
-    int level = 1;
+    public int level = 1;
 
 
 
@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerSpawn;
 
     public RecenterOrigin ro;
+
+    public GameObject player;
     // Update is called once per frame
     void Update()
     {
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
 
         if (!calibrating && inp.gripL)
         {
-            StartCoroutine(Calibrate());
+            // StartCoroutine(Calibrate());
         }
 
 
@@ -127,22 +129,39 @@ public class GameManager : MonoBehaviour
         if(inp.AButtonL && !spawning){
             switch(level){
                 case 1:
-                playerSpawn.transform.position = new Vector3(5, 4, -50);
+                player.transform.position = new Vector3(5, 4, -50);
                 break;
 
                 case 2:
-                playerSpawn.transform.position = new Vector3(-5, 4, -50);
+                player.transform.position = new Vector3(-5, 4, -50);
                 break;
 
                 case 3:
-                playerSpawn.transform.position = new Vector3(-20, 4, -50);
+                player.transform.position = new Vector3(-20, 4, -50);
+                break;
+
+                case 4:
+                player.transform.position = new Vector3(5, 4, -50);
+                break;
+
+                case 5:
+                player.transform.position = new Vector3(-5, 4, -50);
+                break;
+
+                case 6:
+                player.transform.position = new Vector3(-20, 4, -50);
                 break;
             }
             
                 
-            ro.Recenter();
+            // ro.Recenter();
 
-            StartCoroutine(StartSpawning(2));
+            if(level > 3){
+                StartCoroutine(StartSpawning(0.15f));
+            }else{
+                StartCoroutine(StartSpawning(0.5f));
+            }
+            
 
 
 
@@ -151,7 +170,7 @@ public class GameManager : MonoBehaviour
 
             level++;
 
-            if(level == 4){
+            if(level == 7){
                 level = 1;
                 selectionType = 1;
             }
@@ -184,23 +203,41 @@ public class GameManager : MonoBehaviour
 
     GameObject spawnedObject;
 
-    TargetBehavior Spawn()
+    TargetBehavior Spawn(float targetSize)
     {
         spawnedObject = Instantiate(target, GetSpawnLocation(), Quaternion.identity);
+        spawnedObject.transform.localScale = new Vector3(targetSize, targetSize, targetSize);
         return spawnedObject.GetComponent<TargetBehavior>();
     }
 
     TargetBehavior checkBehavior;
 
+    Vector3 previousSpawnLocation = Vector3.zero;
 
+    Vector3 currentSpawnLocation;
     Vector3 GetSpawnLocation()
     {
-        return new Vector3(18, Random.Range(MIN_Y, MAX_Y), Random.Range(MIN_Z, MAX_Z));
+        currentSpawnLocation = new Vector3(18, Random.Range(MIN_Y, MAX_Y), Random.Range(MIN_Z, MAX_Z));
+
+        Debug.Log("previous spawn" + previousSpawnLocation + "current spawn" + currentSpawnLocation + "distence"+Vector3.Distance(currentSpawnLocation,previousSpawnLocation));
+        
+        if(previousSpawnLocation == Vector3.zero){
+            Debug.Log("initializedddddd");
+            previousSpawnLocation = currentSpawnLocation;
+            return currentSpawnLocation;
+        }
+        //if not first time running
+        //make sure distance from previous spawn is far enough away
+        while(Vector3.Distance(currentSpawnLocation,previousSpawnLocation) < 1){
+            currentSpawnLocation = new Vector3(18, Random.Range(MIN_Y, MAX_Y), Random.Range(MIN_Z, MAX_Z));
+        } 
+        previousSpawnLocation = currentSpawnLocation;
+        return currentSpawnLocation;
     }
 
     float startTime;
 
-    public IEnumerator StartSpawning(float timeBetweenSpawns)
+    public IEnumerator StartSpawning(float targetSize)
     {
         
         if (spawning == false)
@@ -230,7 +267,7 @@ public class GameManager : MonoBehaviour
 
             for (int i = 0; i < 15; i++)
             {
-                checkBehavior = Spawn();
+                checkBehavior = Spawn(targetSize);
                 while(!checkBehavior.hasBeenSelected){
                     yield return new WaitForSeconds(0.001f);
                 }
