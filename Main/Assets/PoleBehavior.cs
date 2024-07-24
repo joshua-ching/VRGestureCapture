@@ -34,6 +34,8 @@ public class PoleBehavior : MonoBehaviour
     GameObject closest;
         public MeshRenderer cursormMesh;
 
+        bool pressedAlready = false;
+
     void Update()
     {
         
@@ -53,8 +55,8 @@ public class PoleBehavior : MonoBehaviour
         }
 
         if(inp.triggerR){
-
-            if(gameManager.selectionType == 0){
+            if(!pressedAlready){
+                if(gameManager.selectionType == 0){
 
 
 
@@ -77,32 +79,12 @@ public class PoleBehavior : MonoBehaviour
                 }
             }
             Debug.Log("fired");
-
-            // for(int i=0;i< selectedObjects.Count; i++){
-            //     if(i==0){
-            //         closest = selectedObjects[0];
-            //     }else{
-            //         //if current object is closer to center of pole than the current closest object
-            //         if(Vector3.Distance(this.transform.position, selectedObjects[i].transform.position) < Vector3.Distance(this.transform.position, closest.transform.position)){
-            //         closest = selectedObjects[i];
-            //         }
-            //     }
-            //     // gm.Select(selectedObjects[i]);
-            // }
-            // gm.Select(closest);
+            pressedAlready = true;
+            }
+            
+        }else{
+            pressedAlready = false;
         }
-
-        //  if (target != null)
-        // {
-        //     // Calculate the direction from the pole to the target
-        //     Vector3 direction = target.position - transform.position;
-
-        //     // Find a perpendicular direction
-        //     Vector3 perpendicularDirection = Vector3.Cross(direction, Vector3.up);
-
-        //     // Rotate the pole to point perpendicularly to the target
-        //     transform.rotation = Quaternion.LookRotation(perpendicularDirection);
-        // }
     }
 
 

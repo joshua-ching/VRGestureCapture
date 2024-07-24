@@ -15,9 +15,11 @@ public class TargetBehavior : MonoBehaviour
 
     public GameManager gm;
 
-    float startTime;
+    public float startTime;
 
     public InputData inp;
+
+    int initialMisses;
 
     // public InputData inp;
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class TargetBehavior : MonoBehaviour
         // deathTime = Time.time + timeToWait;
         gm=GameObject.Find("Game Manager").GetComponent<GameManager>();
         inp=GameObject.Find("Input Manager").GetComponent<InputData>();
+        initialMisses = gm.misses;
 
         // gm.Test2();
         startTime = Time.time;
@@ -37,7 +40,7 @@ public class TargetBehavior : MonoBehaviour
         // countDown = deathTime - Time.time;
     }
 
-    bool hasBeenSelected = false;
+    public bool hasBeenSelected = false;
     public void OnSelected(){
         if(!hasBeenSelected){
             // Destroy(this.gameObject);
@@ -46,7 +49,7 @@ public class TargetBehavior : MonoBehaviour
             gm.hits++;
             hasBeenSelected = true;
 
-            gm.WriteTimeToCSV((Time.time-startTime) + "," + transform.localScale.x );//time elapsed since spawn. how fast it was clicked
+            gm.WriteTimeToCSV((Time.time-startTime) + "," + transform.localScale.x + "," + (gm.misses - initialMisses));//time elapsed since spawn. how fast it was clicked
             //fix rotatiuon thing
 
             Debug.Log("rannnnn");            

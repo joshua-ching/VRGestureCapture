@@ -34,6 +34,8 @@ public class InputData : MonoBehaviour
 
     public bool grabL;
 
+    public bool AButtonL;
+
     
 
     public Vector2 stickL;
@@ -112,6 +114,11 @@ public class InputData : MonoBehaviour
         {
             stickL = stickPositionLeft;
             // stickL= Vector2.zero;
+        }
+
+        if (_leftController.TryGetFeatureValue(CommonUsages.primaryButton, out bool AbuttonLeft))
+        {
+            AButtonL = AbuttonLeft;
         }
 
         

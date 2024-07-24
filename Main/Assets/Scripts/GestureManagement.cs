@@ -225,10 +225,9 @@ public class GestureManagement : MonoBehaviour
 
     public void Select(GameObject selectedObject)
     {
-
+    
         try
         {
-
             selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
         }
         catch { }
@@ -283,6 +282,7 @@ public class GestureManagement : MonoBehaviour
 
         if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, rayDistance))
             {
+                Debug.Log("double checking" + hitInfo2.transform.gameObject.name);
                 try
                 {
                     
@@ -317,7 +317,7 @@ public class GestureManagement : MonoBehaviour
         }
 
 
-        // if (gameManager.selectionType == 0)
+        if (gameManager.selectionType == 0)
         {
 
             if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, rayDistance))
@@ -336,26 +336,26 @@ public class GestureManagement : MonoBehaviour
 
 
 
-        // }
-        // else if (gameManager.selectionType == 1)
-        // {
+        }
+        else if (gameManager.selectionType == 1)
+        {
 
 
 
-        //     if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, rayDistance))
-        //     {
-        //         try
-        //         {
-        //             // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-        //             // Select(hitInfo.transform.gameObject);
-        //             marker.transform.position = hitInfo.point;
-        //             // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
+            if (Physics.Raycast(mainCamera.transform.position, rayCastTarget.transform.position - mainCamera.transform.position, out RaycastHit hitInfo, rayDistance))
+            {
+                try
+                {
+                    // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                    // Select(hitInfo.transform.gameObject);
+                    marker.transform.position = hitInfo.point;
+                    // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
-        //         }
-        //         catch
-        //         { }
+                }
+                catch
+                { }
 
-        //     };
+            };
 
 
 

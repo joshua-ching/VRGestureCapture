@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class GameManager : MonoBehaviour
@@ -32,6 +33,10 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI timeLog;
 
+    public TextMeshProUGUI title;
+
+    public TextMeshProUGUI timerText;
+
     // public CSVWriter csvWriter;
 
     bool triggerDown = false;
@@ -53,7 +58,7 @@ public class GameManager : MonoBehaviour
 
 
         TextWriter tw = new StreamWriter(filename, false);
-        tw.WriteLine("Time,Size,Angle");
+        tw.WriteLine("Time,Size,Missed");
         tw.Close();
 
         // tw = new StreamWriter(filename, true);//true cause want to append not create new file
@@ -70,15 +75,30 @@ public class GameManager : MonoBehaviour
         tw.Close();
     }
 
+    int level = 1;
+
 
 
 
 
     bool spawning = false;
 
+    public XRInteractorLineVisual xrLine;
+
+    bool isTiming;
+
+    public GameObject playerSpawn;
+
+    public RecenterOrigin ro;
     // Update is called once per frame
     void Update()
     {
+
+        if(isTiming){
+            timerText.text = (Time.time - startTime).ToString();
+        }else{
+            
+        }
         misses = presses - hits;
         scoreboard.text = hits.ToString() + "   " + presses.ToString() + "  " + misses.ToString();
 
@@ -97,7 +117,45 @@ public class GameManager : MonoBehaviour
             triggerDown = false;
         }
 
+        if(selectionType == 0){
+            xrLine.enabled= true;
+        }else{
+            xrLine.enabled= false;
+        }
 
+
+        if(inp.AButtonL && !spawning){
+            switch(level){
+                case 1:
+                playerSpawn.transform.position = new Vector3(5, 4, -50);
+                break;
+
+                case 2:
+                playerSpawn.transform.position = new Vector3(-5, 4, -50);
+                break;
+
+                case 3:
+                playerSpawn.transform.position = new Vector3(-20, 4, -50);
+                break;
+            }
+            
+                
+            ro.Recenter();
+
+            StartCoroutine(StartSpawning(2));
+
+
+
+
+
+
+            level++;
+
+            if(level == 4){
+                level = 1;
+                selectionType = 1;
+            }
+        }
     }
 
     Vector3[] calibrationPositionArray =
@@ -116,20 +174,23 @@ public class GameManager : MonoBehaviour
     // new Vector3(18,1,-50)};
 
 
-    float MAX_Z = -58;
-    float MIN_Z = -38;
+    float MAX_Z = -56;
+    float MIN_Z = -43;
 
     float MAX_Y = 4.2f;
     float MIN_Y = 0.3f;
 
 
 
+    GameObject spawnedObject;
 
-
-    void Spawn()
+    TargetBehavior Spawn()
     {
-        Instantiate(target, GetSpawnLocation(), Quaternion.identity);
+        spawnedObject = Instantiate(target, GetSpawnLocation(), Quaternion.identity);
+        return spawnedObject.GetComponent<TargetBehavior>();
     }
+
+    TargetBehavior checkBehavior;
 
 
     Vector3 GetSpawnLocation()
@@ -137,21 +198,46 @@ public class GameManager : MonoBehaviour
         return new Vector3(18, Random.Range(MIN_Y, MAX_Y), Random.Range(MIN_Z, MAX_Z));
     }
 
+    float startTime;
+
     public IEnumerator StartSpawning(float timeBetweenSpawns)
     {
         
         if (spawning == false)
         {
             spawning = true;
-            yield return new WaitForSeconds(3);
+
+            timeLog.text = "";
+
+            title.text = "Starting in 3";
+            yield return new WaitForSeconds(1);
+            title.text = "Starting in 2";
+            yield return new WaitForSeconds(1);
+            title.text = "Starting in 1";
+            yield return new WaitForSeconds(1);
+            title.text = "potato";
+
+            //timer stuff
+            startTime = Time.time;
+            isTiming = true;
+
+            //
+
+            
+            
             presses = 0;
             hits = 0;
-            for (int i = 0; i < 20; i++)
+
+            for (int i = 0; i < 15; i++)
             {
-                Spawn();
-                yield return new WaitForSeconds(timeBetweenSpawns);
+                checkBehavior = Spawn();
+                while(!checkBehavior.hasBeenSelected){
+                    yield return new WaitForSeconds(0.001f);
+                }
+                timeLog.text += (Time.time - checkBehavior.startTime) + ", ";
             }
             spawning = false;
+            isTiming = false;
         }
 
     }
