@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public int misses;
 
-    public int selectionType = 0;//must be changed in inspector or something cause its public
+    public bool lazerSelection = false;//must be changed in inspector or something cause its public
 
     public TextMeshProUGUI scoreboard;
 
@@ -69,16 +70,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void WriteTimeToCSV(string data){
+    public void WriteToCSV(string data){
         TextWriter tw = new StreamWriter(filename, true);//true cause want to append not create new file
         tw.WriteLine(data);
         tw.Close();
     }
 
     public int level = 1;
-
-
-
 
 
     bool spawning = false;
@@ -92,9 +90,12 @@ public class GameManager : MonoBehaviour
     public RecenterOrigin ro;
 
     public GameObject player;
+
+    bool bButtonNotPressed = true;
     // Update is called once per frame
     void Update()
     {
+
 
         if(isTiming){
             timerText.text = (Time.time - startTime).ToString();
@@ -119,48 +120,39 @@ public class GameManager : MonoBehaviour
             triggerDown = false;
         }
 
-        if(selectionType == 0){
+        if(lazerSelection){
             xrLine.enabled= true;
         }else{
             xrLine.enabled= false;
+        }   
+
+        if(inp.BButtonL && bButtonNotPressed){
+            lazerSelection = !lazerSelection;
+            bButtonNotPressed = false;
+        }
+        
+        if(!inp.BButtonL){
+            bButtonNotPressed = true;
         }
 
 
         if(inp.AButtonL && !spawning){
-            switch(level){
-                case 1:
-                player.transform.position = new Vector3(5, 4, -50);
-                break;
-
-                case 2:
-                player.transform.position = new Vector3(-5, 4, -50);
-                break;
-
-                case 3:
-                player.transform.position = new Vector3(-20, 4, -50);
-                break;
-
-                case 4:
-                player.transform.position = new Vector3(5, 4, -50);
-                break;
-
-                case 5:
-                player.transform.position = new Vector3(-5, 4, -50);
-                break;
-
-                case 6:
-                player.transform.position = new Vector3(-20, 4, -50);
-                break;
+            
+            if(level == 7){
+                level = 1;
+                lazerSelection = true;
             }
             
                 
             // ro.Recenter();
 
-            if(level > 3){
-                StartCoroutine(StartSpawning(0.15f));
+            if(level <= 3){
+                                StartCoroutine(StartSpawning(0.5f));
             }else{
-                StartCoroutine(StartSpawning(0.5f));
+                                StartCoroutine(StartSpawning(0.15f));
             }
+
+            StartCoroutine(SetPosition());
             
 
 
@@ -168,12 +160,11 @@ public class GameManager : MonoBehaviour
 
 
 
-            level++;
 
-            if(level == 7){
-                level = 1;
-                selectionType = 1;
-            }
+            // if(level == 6){
+            //     level = 1;
+            //     selectionType = 1;
+            // }
         }
     }
 
@@ -202,6 +193,44 @@ public class GameManager : MonoBehaviour
 
 
     GameObject spawnedObject;
+
+    IEnumerator SetPosition(){
+        player.GetComponent<CharacterController>().enabled = false;
+
+        yield return new WaitForSeconds(1);
+                        Debug.Log("teliportedran");
+
+         switch(level){
+                case 1:
+                player.transform.position = new Vector3(5, 4, -50);
+                Debug.Log("teliported");
+                break;
+
+                case 2:
+                player.transform.position = new Vector3(-5, 4, -50);
+                Debug.Log("teliported2");
+
+                break;
+
+                case 3:
+                player.transform.position = new Vector3(-15, 4, -50);
+                break;
+
+                case 4:
+                player.transform.position = new Vector3(5, 4, -50);
+                break;
+
+                case 5:
+                player.transform.position = new Vector3(-5, 4, -50);
+                break;
+
+                case 6:
+                player.transform.position = new Vector3(-15, 4, -50);
+                break;
+            }
+                    player.GetComponent<CharacterController>().enabled = true;
+
+    }
 
     TargetBehavior Spawn(float targetSize)
     {
@@ -242,6 +271,8 @@ public class GameManager : MonoBehaviour
         
         if (spawning == false)
         {
+            presses = 0;
+            hits = 0;
             spawning = true;
 
             timeLog.text = "";
@@ -252,7 +283,19 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             title.text = "Starting in 1";
             yield return new WaitForSeconds(1);
-            title.text = "potato";
+
+            title.text = "Distance: ";
+            switch(level){
+                case 1:case 4:
+                title.text += "15";
+                break;
+                case 2: case 5:
+                title.text += "25";
+                break;
+                case 3: case 6:
+                title.text += "35";
+                break;
+            }
 
             //timer stuff
             startTime = Time.time;
@@ -262,10 +305,9 @@ public class GameManager : MonoBehaviour
 
             
             
-            presses = 0;
-            hits = 0;
+            
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 5; i++)
             {
                 checkBehavior = Spawn(targetSize);
                 while(!checkBehavior.hasBeenSelected){
@@ -275,6 +317,9 @@ public class GameManager : MonoBehaviour
             }
             spawning = false;
             isTiming = false;
+            level++;
+            WriteToCSV("End of Level" + level);
+
         }
 
     }

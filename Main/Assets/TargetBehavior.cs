@@ -47,9 +47,9 @@ public class TargetBehavior : MonoBehaviour
 
             // .hits++;
             gm.hits++;
+            gm.WriteToCSV((Time.time-startTime) + "," + transform.localScale.x + "," + (gm.misses - initialMisses));//time elapsed since spawn. how fast it was clicked
             hasBeenSelected = true;
 
-            gm.WriteTimeToCSV((Time.time-startTime) + "," + transform.localScale.x + "," + (gm.misses - initialMisses));//time elapsed since spawn. how fast it was clicked
             //fix rotatiuon thing
 
             Debug.Log("rannnnn");            

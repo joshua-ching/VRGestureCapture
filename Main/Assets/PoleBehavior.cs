@@ -56,7 +56,7 @@ public class PoleBehavior : MonoBehaviour
 
         if(inp.triggerR){
             if(!pressedAlready){
-                if(gameManager.selectionType == 0){
+                if(gameManager.lazerSelection){
 
 
 
@@ -65,7 +65,7 @@ public class PoleBehavior : MonoBehaviour
                 gm.Select(gm.selectedObject);
                 };
             }
-            else if(gameManager.selectionType == 1){
+            else if(!gameManager.lazerSelection){
 
             
                 for(int i=0;i< selectedObjects.Count; i++){

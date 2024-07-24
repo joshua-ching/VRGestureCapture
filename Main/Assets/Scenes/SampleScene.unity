@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 65593393}
   - component: {fileID: 65593392}
   - component: {fileID: 65593391}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6485,7 +6485,7 @@ GameObject:
   - component: {fileID: 761820114}
   - component: {fileID: 761820113}
   - component: {fileID: 761820116}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7659,7 +7659,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a8ef7e9f114b954e83de2965d179d23, type: 2}
+  - {fileID: 2100000, guid: d478ba9322d01bb489c5f3f714b01fc2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8108,7 +8108,7 @@ MonoBehaviour:
   hits: 0
   presses: 0
   misses: 0
-  selectionType: 1
+  lazerSelection: 0
   scoreboard: {fileID: 478522261}
   timeLog: {fileID: 47066180}
   title: {fileID: 308985162}
@@ -8880,7 +8880,7 @@ GameObject:
   - component: {fileID: 1091122642}
   - component: {fileID: 1091122641}
   - component: {fileID: 1091122644}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10966,7 +10966,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -11628,7 +11628,7 @@ Transform:
   m_GameObject: {fileID: 1402867936}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10, y: 4, z: -50}
+  m_LocalPosition: {x: 10, y: 4, z: -38.81}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11796,7 +11796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1496310995}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Testingbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14264,7 +14264,7 @@ GameObject:
   - component: {fileID: 1922814704}
   - component: {fileID: 1922814703}
   - component: {fileID: 1922814706}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16170,6 +16170,7 @@ MonoBehaviour:
   gripL: 0
   grabL: 0
   AButtonL: 0
+  BButtonL: 0
   stickL: {x: 0, y: 0}
   posR: {x: 0, y: 0, z: 0}
   triggerR: 0

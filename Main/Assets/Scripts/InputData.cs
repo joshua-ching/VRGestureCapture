@@ -35,6 +35,7 @@ public class InputData : MonoBehaviour
     public bool grabL;
 
     public bool AButtonL;
+    public bool BButtonL;
 
     
 
@@ -119,6 +120,11 @@ public class InputData : MonoBehaviour
         if (_leftController.TryGetFeatureValue(CommonUsages.primaryButton, out bool AbuttonLeft))
         {
             AButtonL = AbuttonLeft;
+        }
+
+        if (_leftController.TryGetFeatureValue(CommonUsages.secondaryButton, out bool BbuttonLeft))
+        {
+            BButtonL = BbuttonLeft;
         }
 
         

@@ -313,11 +313,11 @@ public class GestureManagement : MonoBehaviour
         if (isControllingVolume)
         {
             // bg.volume = initialBgLevel + ((5 * (inp.posR.y - handInitialPos.y)));
-            Debug.Log((5 * (inp.posR.y - handInitialPos.y)).ToString());
+            // Debug.Log((5 * (inp.posR.y - handInitialPos.y)).ToString());
         }
 
 
-        if (gameManager.selectionType == 0)
+        if (gameManager.lazerSelection)
         {
 
             if (Physics.Raycast(rightHand.transform.position, rightHand.transform.forward, out RaycastHit hitInfo2, rayDistance))
@@ -337,7 +337,7 @@ public class GestureManagement : MonoBehaviour
 
 
         }
-        else if (gameManager.selectionType == 1)
+        else if (!gameManager.lazerSelection)
         {
 
 
