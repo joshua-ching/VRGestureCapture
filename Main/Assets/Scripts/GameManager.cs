@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         tw.Close();
     }
 
-    public int level = 1;
+    public int level = 5;
 
 
     bool spawning = false;
@@ -95,15 +95,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         if(isTiming){
             timerText.text = (Time.time - startTime).ToString();
         }else{
             
         }
         misses = presses - hits;
-        scoreboard.text = hits.ToString() + "   " + presses.ToString() + "  " + misses.ToString();
+        scoreboard.text = "Hits: " + hits.ToString() + "\nMisses: " + misses.ToString();
 
 
         if (!calibrating && inp.gripL)
@@ -284,16 +282,25 @@ public class GameManager : MonoBehaviour
             title.text = "Starting in 1";
             yield return new WaitForSeconds(1);
 
-            title.text = "Distance: ";
+            title.text = "Level ";
             switch(level){
-                case 1:case 4:
-                title.text += "15";
+                case 1:
+                title.text += "1/6";
                 break;
-                case 2: case 5:
-                title.text += "25";
+                case 2: 
+                title.text += "2/6";
                 break;
-                case 3: case 6:
-                title.text += "35";
+                case 3: 
+                title.text += "3/6";
+                break;
+                case 4:
+                title.text += "4/6";
+                break;
+                case 5:
+                title.text += "5/6";
+                break;
+                case 6:
+                title.text += "6/6";
                 break;
             }
 
@@ -307,7 +314,7 @@ public class GameManager : MonoBehaviour
             
             
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 checkBehavior = Spawn(targetSize);
                 while(!checkBehavior.hasBeenSelected){
@@ -317,12 +324,26 @@ public class GameManager : MonoBehaviour
             }
             spawning = false;
             isTiming = false;
-            level++;
             WriteToCSV("End of Level" + level);
+            level++;
+
+            if(level == 7)
+            {
+                round++;
+
+            }
+            if (round == 2){
+                finishRenderer.material = finishMaterial;
+            }
 
         }
 
     }
+
+    public MeshRenderer finishRenderer;
+
+    public Material finishMaterial;
+    int round = 0;
 
     //fill till 8
 

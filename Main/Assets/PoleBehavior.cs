@@ -40,19 +40,19 @@ public class PoleBehavior : MonoBehaviour
     {
         
 
-        if(inp.gripR){
-            childMesh.enabled = true;
-            parentMesh.enabled = true;
-            cursormMesh.enabled=true;
+        // if(inp.gripR){
+        //     // childMesh.enabled = true;
+        //     // parentMesh.enabled = true;
+        //     // cursormMesh.enabled=true;
 
 
-        }else{
-                        childMesh.enabled = false;
-                        parentMesh.enabled = false;
-                                    cursormMesh.enabled=false;
+        // }else{
+        //                 childMesh.enabled = false;
+        //                 parentMesh.enabled = false;
+        //                             cursormMesh.enabled=false;
 
 
-        }
+        // }
 
         if(inp.triggerR){
             if(!pressedAlready){

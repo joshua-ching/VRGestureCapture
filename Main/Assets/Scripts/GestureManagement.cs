@@ -170,7 +170,6 @@ public class GestureManagement : MonoBehaviour
         {
             if (closestWorld == null)
             {
-
                 closestWorld = wh.worldList[i];
             }
             else
@@ -228,7 +227,7 @@ public class GestureManagement : MonoBehaviour
     
         try
         {
-            selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
+            // selectedObject.GetComponent<MeshRenderer>().material = selectMaterial;
         }
         catch { }
 
@@ -324,7 +323,7 @@ public class GestureManagement : MonoBehaviour
             {
                 try
                 {
-                    hitInfo2.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
+                    // hitInfo2.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
                     marker.transform.position = hitInfo2.point;
                     selectedObject = hitInfo2.transform.gameObject;
                 }
@@ -347,7 +346,7 @@ public class GestureManagement : MonoBehaviour
                 try
                 {
                     // hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
-                    // Select(hitInfo.transform.gameObject);
+                    Select(hitInfo.transform.gameObject);
                     marker.transform.position = hitInfo.point;
                     // StartCoroutine(RestoreMaterial(hitInfo.transform.gameObject.GetComponent<MeshRenderer>(),hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material));
 
